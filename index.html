@@ -48,16 +48,16 @@
     body[data-theme="culinary"] .identity-row.active .identity-station,
     body[data-theme="culinary"] .identity-row.active .identity-name { color: #3a6b8a; }
     body[data-theme="jukebox"] {
-      --gold: #c0392b;
-      --gold-dim: rgba(192,57,43,0.13);
-      --gold-border: rgba(192,57,43,0.3);
-      --forest: #7d1f17;
+      --gold: #6a2c8c;
+      --gold-dim: rgba(106,44,140,0.13);
+      --gold-border: rgba(106,44,140,0.3);
+      --forest: #4a1a63;
     }
-    body[data-theme="jukebox"] .hero { background: #1a0a08; }
-    body[data-theme="jukebox"] .topbar-cta:hover { background: #7d1f17; }
-    body[data-theme="jukebox"] .subnav-link.active { border-bottom-color: #c0392b; }
+    body[data-theme="jukebox"] .hero { background: #1a0a24; }
+    body[data-theme="jukebox"] .topbar-cta:hover { background: #4a1a63; }
+    body[data-theme="jukebox"] .subnav-link.active { border-bottom-color: #6a2c8c; }
     body[data-theme="jukebox"] .identity-row.active .identity-station,
-    body[data-theme="jukebox"] .identity-row.active .identity-name { color: #c0392b; }
+    body[data-theme="jukebox"] .identity-row.active .identity-name { color: #6a2c8c; }
 
     /* ── THEME: CURRICULUM (chalkboard green) ── */
     body[data-theme="curriculum"] {
@@ -902,7 +902,7 @@
   <!-- ── TOPBAR ── -->
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="topbar-brand" href="/">
+      <a class="topbar-brand" href="/" onclick="clearTheme(); if (location.pathname === '/' || location.pathname === '/index.html') { event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }">
         <span class="topbar-brand-kicker">crooney.ca</span>
         <span class="topbar-brand-name">George <em>Crooney</em></span>
       </a>
@@ -919,7 +919,7 @@
           <span data-curriculum="">Lessons</span>
         </a>
         <a class="subnav-link" href="#kitchen">About</a>
-        <a class="subnav-link" href="#test-kitchen">
+        <a class="subnav-link" href="#test-kitchen" style="display:none;">
           <span data-default>The Laboratory</span>
           <span data-culinary="">The Test Kitchen</span>
           <span data-jukebox="">The Experimental Remix</span>
@@ -933,7 +933,7 @@
         </a>
       </nav>
       <div class="theme-switcher">
-        <button class="theme-btn active" onclick="setTheme('jukebox',this)">Jukebox</button>
+        <button class="theme-btn" onclick="setTheme('jukebox',this)">Jukebox</button>
         <button class="theme-btn" onclick="setTheme('culinary',this)">Culinary</button>
         <button class="theme-btn" onclick="setTheme('curriculum',this)">Curriculum</button>
       </div>
@@ -1178,8 +1178,8 @@
     </div>
   </section>
 
-  <!-- ── TEST KITCHEN ── -->
-  <section class="section" id="test-kitchen">
+  <!-- ── TEST KITCHEN (hidden for now) ── -->
+  <section class="section" id="test-kitchen" style="display:none;">
     <div class="section-inner">
       <div class="section-header">
         <div>
@@ -1310,8 +1310,14 @@
   <script>
     // ── THEME SWITCHER ──
     function setTheme(theme, btn) {
-      document.body.setAttribute('data-theme', theme);
+      const isActive = btn.classList.contains('active');
       document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      if (isActive) {
+        document.body.removeAttribute('data-theme');
+        document.title = 'Crooney Interactive — George Crooney';
+        return;
+      }
+      document.body.setAttribute('data-theme', theme);
       btn.classList.add('active');
       const titles = {
         culinary: 'Crooney Interactive — George Crooney',
@@ -1319,6 +1325,11 @@
         curriculum: 'The Curriculum — George Crooney'
       };
       document.title = titles[theme];
+    }
+    function clearTheme() {
+      document.body.removeAttribute('data-theme');
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      document.title = 'Crooney Interactive — George Crooney';
     }
 
     const vimeoSrcs = {
