@@ -1249,6 +1249,7 @@
       btn.style.background = 'var(--ink)';
       btn.style.color = 'var(--cream)';
     }
+    function filterCat(cat, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.catalogue-item').forEach(item => {
