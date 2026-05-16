@@ -634,6 +634,32 @@
       font-size: 10px;
       color: var(--gold);
     }
+    .catalogue-item.requested {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(0,0,0,0.08);
+      opacity: 0.7;
+    }
+    .catalogue-item.requested .catalogue-song { color: var(--ink-mid); }
+    .catalogue-item.requested::after {
+      content: '✓ REQUESTED';
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      color: var(--ink-mid);
+    }
+    .catalogue-item.requested.in-setlist {
+      background: var(--gold-dim);
+      border-color: var(--gold-border);
+      opacity: 1;
+    }
+    .catalogue-item.requested.in-setlist .catalogue-song { color: var(--ink); }
+    .catalogue-item.requested.in-setlist::after {
+      content: '✓ RE-REQUEST';
+      color: var(--gold);
+    }
     body:not([data-theme]) .catalogue-tag,
     body:not([data-theme]) .filter-btn[onclick*="session"] { display: none; }
     .setlist-bar {
@@ -1135,7 +1161,7 @@
       <div class="section-header">
         <div>
           <div class="section-kicker">
-            <span data-default>George Crooney · In the Wild, Fishing for Songs</span>
+            <span data-default>George Crooney in the Wild, Fishin' for Songs</span>
             <span data-culinary="">Service</span>
             <span data-jukebox="">The Set</span>
             <span data-curriculum="">Session</span>
@@ -1154,8 +1180,8 @@
           <button onclick="switchVimeo('v3',this)" id="tab-v3" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--ink);color:var(--cream);transition:background 0.15s;">May 10</button>
           <button onclick="switchVimeo('v2',this)" id="tab-v2" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;">May 3</button>
           <button onclick="switchVimeo('v1',this)" id="tab-v1" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;">April 26</button>
-          <button onclick="switchVimeo('v4',this)" id="tab-v4" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;">Valentine's Menu</button>
-          <button onclick="switchVimeo('v5',this)" id="tab-v5" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;">Christmas Menu</button>
+          <button onclick="switchVimeo('v4',this)" id="tab-v4" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;"><span data-default>Valentine's Set</span><span data-culinary>Valentine's Menu</span><span data-jukebox>Valentine's Set</span><span data-curriculum>Valentine's Set</span></button>
+          <button onclick="switchVimeo('v5',this)" id="tab-v5" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;"><span data-default>Christmas Set</span><span data-culinary>Christmas Menu</span><span data-jukebox>Christmas Set</span><span data-curriculum>Christmas Set</span></button>
           <a href="/prix-fixe.html" style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.1rem;border:none;cursor:pointer;background:var(--parchment);color:var(--ink-mid);transition:background 0.15s;text-decoration:none;display:inline-flex;align-items:center;">More…</a>
         </div>
         <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid var(--rule);">
@@ -1180,7 +1206,7 @@
       <div class="section-header">
         <div>
           <div class="section-kicker">
-            <span data-default>Bet you didn't know you could</span>
+            <span data-default>Bet you didn't know you could…</span>
             <span data-culinary="">Requests · À La Carte</span>
             <span data-jukebox="">Requests · Select &amp; Play</span>
             <span data-curriculum="">Requests · Enroll in a Lesson</span>
@@ -1456,6 +1482,9 @@
         <button class="setlist-list-close" onclick="toggleSetlistList()" aria-label="Close">✕</button>
       </div>
       <div id="setlist-list-items"></div>
+      <div style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--rule);text-align:right;">
+        <button id="setlist-clear-requested" class="setlist-list-remove" onclick="clearRequested()" style="display:none;">Clear requested history</button>
+      </div>
     </div>
   </div>
   <div class="setlist-bar" id="setlist-bar" role="region" aria-label="Setlist request bar">
@@ -1503,8 +1532,8 @@
       v1: 'April 26, 2026 — Live · George Crooney',
       v2: 'May 3, 2026 — Live · George Crooney',
       v3: 'May 10, 2026 — Live · George Crooney',
-      v4: 'Valentine\'s Menu — Live · George Crooney',
-      v5: 'Christmas Menu — Live · George Crooney'
+      v4: 'Valentine\'s Set — Live · George Crooney',
+      v5: 'Christmas Set — Live · George Crooney'
     };
     function switchVimeo(id, btn) {
       document.getElementById('vimeo-embed').src = vimeoSrcs[id];
@@ -1557,21 +1586,25 @@
 
     // ── SETLIST REQUEST ──
     const SETLIST_KEY = 'crooney.setlist';
-    function readSetlist() {
-      try { return JSON.parse(localStorage.getItem(SETLIST_KEY)) || []; }
+    const REQUESTED_KEY = 'crooney.requested';
+    function readJSON(key) {
+      try { return JSON.parse(localStorage.getItem(key)) || []; }
       catch (e) { return []; }
     }
-    function writeSetlist(list) {
-      localStorage.setItem(SETLIST_KEY, JSON.stringify(list));
-    }
+    function readSetlist() { return readJSON(SETLIST_KEY); }
+    function readRequested() { return readJSON(REQUESTED_KEY); }
+    function writeSetlist(list) { localStorage.setItem(SETLIST_KEY, JSON.stringify(list)); }
+    function writeRequested(list) { localStorage.setItem(REQUESTED_KEY, JSON.stringify(list)); }
     function songKey(song, artist) { return `${song}||${artist}`; }
     function renderSetlist() {
       const list = readSetlist();
+      const requested = readRequested();
       const bar = document.getElementById('setlist-bar');
       const count = document.getElementById('setlist-count');
       const submit = document.getElementById('setlist-submit');
       const items = document.getElementById('setlist-list-items');
       const drawer = document.getElementById('setlist-list');
+      const clearReqBtn = document.getElementById('setlist-clear-requested');
       const n = list.length;
       if (n === 0) {
         bar.classList.remove('visible');
@@ -1580,14 +1613,16 @@
         bar.classList.add('visible');
       }
       count.textContent = `${n} song${n === 1 ? '' : 's'} in your setlist`;
-      // mark selected tiles
+      // mark tiles
       const selectedKeys = new Set(list.map(s => songKey(s.song, s.artist)));
+      const requestedKeys = new Set(requested.map(s => songKey(s.song, s.artist)));
       document.querySelectorAll('.catalogue-item').forEach(el => {
         const song = el.querySelector('.catalogue-song')?.textContent.trim();
         const artist = el.querySelector('.catalogue-artist')?.textContent.trim();
         if (!song) return;
-        if (selectedKeys.has(songKey(song, artist))) el.classList.add('in-setlist');
-        else el.classList.remove('in-setlist');
+        const k = songKey(song, artist);
+        el.classList.toggle('in-setlist', selectedKeys.has(k));
+        el.classList.toggle('requested', requestedKeys.has(k));
       });
       // drawer
       items.innerHTML = list.map((s, i) => `
@@ -1605,6 +1640,7 @@
           renderSetlist();
         });
       });
+      if (clearReqBtn) clearReqBtn.style.display = requested.length ? 'inline-block' : 'none';
       // mailto
       const subject = `Setlist Request — ${n} song${n === 1 ? '' : 's'}`;
       const bodyLines = list.map((s, i) => `${i + 1}. ${s.song} — ${s.artist}`).join('\n');
@@ -1630,8 +1666,30 @@
       writeSetlist([]);
       renderSetlist();
     }
+    function clearRequested() {
+      if (!confirm('Clear your requested history? Songs you previously submitted will no longer be marked as requested.')) return;
+      writeRequested([]);
+      renderSetlist();
+    }
+    function markCurrentAsRequested() {
+      const list = readSetlist();
+      if (!list.length) return;
+      const requested = readRequested();
+      const seen = new Set(requested.map(s => songKey(s.song, s.artist)));
+      list.forEach(s => {
+        const k = songKey(s.song, s.artist);
+        if (!seen.has(k)) { requested.push(s); seen.add(k); }
+      });
+      writeRequested(requested);
+      writeSetlist([]);
+      renderSetlist();
+    }
     document.querySelectorAll('.catalogue-item').forEach(el => {
       el.addEventListener('click', () => toggleSetlistItem(el));
+    });
+    document.getElementById('setlist-submit').addEventListener('click', () => {
+      // Optimistically move current setlist into requested after a tiny delay so the mailto opens first
+      setTimeout(markCurrentAsRequested, 200);
     });
     renderSetlist();
   </script>
