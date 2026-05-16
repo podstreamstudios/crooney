@@ -26,18 +26,25 @@
     }
 
     /* ── THEME: CULINARY (slate blue) ── */
-    body:not([data-theme]),
+    body:not([data-theme]) {
+      --gold: #722f37;
+      --gold-dim: rgba(114,47,55,0.12);
+      --gold-border: rgba(114,47,55,0.3);
+    }
+    body:not([data-theme]) .hero { background: #2a1015; }
+    body:not([data-theme]) .topbar-cta:hover { background: #722f37; }
+    body:not([data-theme]) .subnav-link.active { border-bottom-color: #722f37; }
+    body:not([data-theme]) .identity-row.active .identity-station,
+    body:not([data-theme]) .identity-row.active .identity-name { color: #722f37; }
+
+    /* ── THEME: CULINARY (slate blue) ── */
     body[data-theme="culinary"] {
       --gold: #3a6b8a;
       --gold-dim: rgba(58,107,138,0.12);
       --gold-border: rgba(58,107,138,0.3);
     }
-    body:not([data-theme]) .hero,
     body[data-theme="culinary"] .hero { background: #1e3a52; }
-    body:not([data-theme]) .subnav-link.active,
     body[data-theme="culinary"] .subnav-link.active { border-bottom-color: #3a6b8a; }
-    body:not([data-theme]) .identity-row.active .identity-station,
-    body:not([data-theme]) .identity-row.active .identity-name,
     body[data-theme="culinary"] .identity-row.active .identity-station,
     body[data-theme="culinary"] .identity-row.active .identity-name { color: #3a6b8a; }
     body[data-theme="jukebox"] {
