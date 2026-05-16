@@ -264,9 +264,15 @@
     .hero-kicker::before,
     .hero-kicker::after {
       content: '';
-      flex: 1;
       height: 1px;
       background: rgba(250,247,242,0.15);
+    }
+    .hero-kicker::before {
+      width: 40px;
+      flex-shrink: 0;
+    }
+    .hero-kicker::after {
+      flex: 1;
       max-width: 120px;
     }
     .hero-title {
@@ -1055,7 +1061,7 @@
           <span data-jukebox="">Select &amp; Play</span>
           <span data-curriculum="">Lessons</span>
         </a>
-        <a class="subnav-link default-hide" href="#kitchen">About</a>
+        <a class="subnav-link" href="#kitchen">About</a>
         <a class="subnav-link" href="#test-kitchen" style="display:none;">
           <span data-default>The Laboratory</span>
           <span data-culinary="">The Test Kitchen</span>
