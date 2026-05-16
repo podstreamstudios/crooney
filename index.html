@@ -1053,6 +1053,16 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
+      /* mobile-only legibility bumps — laptop view unchanged */
+      :root { --ink-light: #8a8275; } /* was #b0a898 — lifts contrast from ~2.5:1 to ~4.5:1 */
+      body { font-weight: 400; font-size: 18px; } /* was 300 / 17px */
+      .topbar-brand-kicker { font-size: 10px; }
+      .hero-kicker { font-size: 11px; color: rgba(250,247,242,0.75); }
+      .section-kicker { font-size: 11px; }
+      .identity-station { font-size: 11px; color: var(--ink-mid); }
+      .res-card-kicker { font-size: 10px; color: rgba(250,247,242,0.6); }
+      .reservations-section .section-kicker { color: rgba(250,247,242,0.6); }
+      /* layout stack-down */
       .hero-inner { padding: 3rem 1.25rem 2.5rem; }
       .section-inner { padding: 2.5rem 1.25rem; }
       .kitchen-grid { grid-template-columns: 1fr; }
