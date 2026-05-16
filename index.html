@@ -37,27 +37,29 @@
     body:not([data-theme]) .identity-row.active .identity-station,
     body:not([data-theme]) .identity-row.active .identity-name { color: #722f37; }
 
-    /* ── THEME: CULINARY (slate blue) ── */
+    /* ── THEME: CULINARY (deep purple) ── */
     body[data-theme="culinary"] {
-      --gold: #3a6b8a;
-      --gold-dim: rgba(58,107,138,0.12);
-      --gold-border: rgba(58,107,138,0.3);
-    }
-    body[data-theme="culinary"] .hero { background: #1e3a52; }
-    body[data-theme="culinary"] .subnav-link.active { border-bottom-color: #3a6b8a; }
-    body[data-theme="culinary"] .identity-row.active .identity-station,
-    body[data-theme="culinary"] .identity-row.active .identity-name { color: #3a6b8a; }
-    body[data-theme="jukebox"] {
       --gold: #6a2c8c;
       --gold-dim: rgba(106,44,140,0.13);
       --gold-border: rgba(106,44,140,0.3);
       --forest: #4a1a63;
     }
-    body[data-theme="jukebox"] .hero { background: #1a0a24; }
-    body[data-theme="jukebox"] .topbar-cta:hover { background: #4a1a63; }
-    body[data-theme="jukebox"] .subnav-link.active { border-bottom-color: #6a2c8c; }
+    body[data-theme="culinary"] .hero { background: #1a0a24; }
+    body[data-theme="culinary"] .topbar-cta:hover { background: #4a1a63; }
+    body[data-theme="culinary"] .subnav-link.active { border-bottom-color: #6a2c8c; }
+    body[data-theme="culinary"] .identity-row.active .identity-station,
+    body[data-theme="culinary"] .identity-row.active .identity-name { color: #6a2c8c; }
+
+    /* ── THEME: JUKEBOX (slate blue) ── */
+    body[data-theme="jukebox"] {
+      --gold: #3a6b8a;
+      --gold-dim: rgba(58,107,138,0.12);
+      --gold-border: rgba(58,107,138,0.3);
+    }
+    body[data-theme="jukebox"] .hero { background: #1e3a52; }
+    body[data-theme="jukebox"] .subnav-link.active { border-bottom-color: #3a6b8a; }
     body[data-theme="jukebox"] .identity-row.active .identity-station,
-    body[data-theme="jukebox"] .identity-row.active .identity-name { color: #6a2c8c; }
+    body[data-theme="jukebox"] .identity-row.active .identity-name { color: #3a6b8a; }
 
     /* ── THEME: CURRICULUM (chalkboard green) ── */
     body[data-theme="curriculum"] {
