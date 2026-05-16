@@ -94,6 +94,8 @@
       white-space: nowrap;
     }
     .theme-btn:hover { color: var(--ink); border-color: var(--ink-mid); }
+    .theme-btn:focus { outline: none; }
+    .theme-btn:focus-visible { outline: 2px solid var(--ink-light); outline-offset: 2px; }
     .theme-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 
     /* ── THEME-SWITCHABLE INLINE TEXT ── */
@@ -1311,7 +1313,7 @@
     // ── THEME SWITCHER ──
     function setTheme(theme, btn) {
       const isActive = btn.classList.contains('active');
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.theme-btn').forEach(b => { b.classList.remove('active'); b.blur(); });
       if (isActive) {
         document.body.removeAttribute('data-theme');
         document.title = 'Crooney Interactive — George Crooney';
@@ -1328,7 +1330,7 @@
     }
     function clearTheme() {
       document.body.removeAttribute('data-theme');
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.theme-btn').forEach(b => { b.classList.remove('active'); b.blur(); });
       document.title = 'Crooney Interactive — George Crooney';
     }
 
