@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prix Fixe — George Crooney</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #faf7f2;
+      --parchment: #f2ede4;
+      --parchment-deep: #e8e0d0;
+      --ink: #0e0d0b;
+      --ink-mid: #7a7268;
+      --ink-light: #b0a898;
+      --rule: #d4cdc0;
+      --gold: #c8692a;
+      --gold-dim: rgba(200,105,42,0.15);
+      --gold-border: rgba(200,105,42,0.3);
+      --slate: #3a6b8a;
+      --slate-dim: rgba(58,107,138,0.12);
+      --forest: #2d5a3d;
+      --forest-dim: rgba(45,90,61,0.1);
+      --forest-border: rgba(45,90,61,0.25);
+      --max-w: 1000px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; overflow-x: clip; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(250,247,242,0.94);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .topbar-inner::-webkit-scrollbar { display: none; }
+    .topbar-brand {
+      display: flex;
+      flex-direction: column;
+      padding: 0.7rem 1.5rem 0.7rem 0;
+      border-right: 1px solid var(--rule);
+      margin-right: 0;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .topbar-brand-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+    .topbar-brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .topbar-brand-name em {
+      font-style: normal;
+      font-weight: 800;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--ink);
+    }
+    .subnav {
+      display: flex;
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .subnav::-webkit-scrollbar { display: none; }
+    .subnav-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      padding: 1rem 1.1rem;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .subnav-link:hover { color: var(--ink); }
+    .subnav-link.active { color: var(--ink); border-bottom-color: var(--gold); }
+    .topbar-cta {
+      flex-shrink: 0;
+      margin-left: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .topbar-cta:hover { background: var(--forest); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--forest);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgba(255,255,255,0.03) 39px,
+        rgba(255,255,255,0.03) 40px
+      );
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+    }
+    .hero-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.5);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-kicker::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(250,247,242,0.15);
+      max-width: 120px;
+    }
+    .hero-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      color: var(--cream);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.2rem;
+    }
+    .hero-title-italic {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(250,247,242,0.7);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5rem;
+    }
+    .hero-concept {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(250,247,242,0.65);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      border-left: 2px solid rgba(250,247,242,0.2);
+      padding-left: 1.25rem;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn-primary {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--cream);
+      color: var(--ink);
+      padding: 0.85rem 1.75rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--parchment); }
+    .btn-secondary {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(250,247,242,0.7);
+      padding: 0.85rem 1.75rem;
+      text-decoration: none;
+      border: 1px solid rgba(250,247,242,0.25);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-secondary:hover { border-color: rgba(250,247,242,0.5); color: var(--cream); }
+    .hero-ticker {
+      margin-top: 4rem;
+      border-top: 1px solid rgba(250,247,242,0.1);
+      padding-top: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: rgba(250,247,242,0.3);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 35s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION WRAPPERS ── */
+    .section { border-bottom: 1px solid var(--rule); }
+    .section-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .section-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .section-title em { font-style: normal; font-weight: 800; color: inherit; }
+    .section-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .section-link:hover { color: var(--ink); border-color: var(--ink-mid); }
+
+    /* ── TONIGHT'S SERVICE ── */
+    .service-empty {
+      background: var(--parchment);
+      border: 1px solid var(--rule);
+      padding: 2.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .service-empty-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--rule);
+      flex-shrink: 0;
+      margin-top: 0.4rem;
+    }
+    .service-empty-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.5rem;
+    }
+    .service-empty-body {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+    .service-card {
+      border: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 3px 1fr;
+    }
+    .service-card-accent { background: var(--forest); }
+    .service-card-body { padding: 1.5rem 1.75rem; }
+    .service-card-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      margin-bottom: 0.4rem;
+    }
+    .service-card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+    .service-card-meta {
+      font-size: 14px;
+      color: var(--ink-mid);
+      font-style: italic;
+    }
+
+    /* ── PRIX FIXE MENUS ── */
+    .prix-fixe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .prix-fixe-card {
+      background: var(--cream);
+      padding: 2rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .prix-fixe-card:hover { background: var(--parchment); }
+    .prix-fixe-card.featured { background: var(--parchment); }
+    .prix-fixe-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--ink-light);
+      margin-bottom: 0.5rem;
+    }
+    .prix-fixe-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+      line-height: 1.2;
+    }
+    .prix-fixe-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--ink-mid);
+      margin-bottom: 1rem;
+    }
+    .prix-fixe-courses {
+      list-style: none;
+      margin-bottom: 1.25rem;
+    }
+    .prix-fixe-course {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--parchment-deep);
+      font-size: 13px;
+      color: var(--ink-mid);
+    }
+    .prix-fixe-card.featured .prix-fixe-course {
+      border-bottom-color: var(--rule);
+    }
+    .prix-fixe-course:last-child { border-bottom: none; }
+    .course-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--ink-light);
+      min-width: 1.2rem;
+    }
+    .course-name { color: var(--ink); }
+    .course-artist { color: var(--ink-light); font-size: 11px; }
+    .prix-fixe-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+    }
+    .prix-fixe-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--ink-light);
+    }
+    .prix-fixe-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--slate);
+    }
+    .prix-fixe-link:hover { color: var(--ink); border-color: var(--ink-mid); }
+    .featured-badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gold-dim);
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 2px 7px;
+    }
+
+    /* ── À LA CARTE CATALOGUE ── */
+    .catalogue-intro {
+      font-size: 15px;
+      color: var(--ink-mid);
+      max-width: 560px;
+      margin-bottom: 2rem;
+      font-style: italic;
+      line-height: 1.65;
+    }
+    .catalogue-filter {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .filter-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+    .catalogue-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-bottom: 1.5rem;
+    }
+    .catalogue-item {
+      background: var(--cream);
+      padding: 0.85rem 1rem;
+      transition: background 0.12s;
+    }
+    .catalogue-item:hover { background: var(--parchment); }
+    .catalogue-song {
+      font-size: 13px;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+    .catalogue-artist {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      color: var(--ink-light);
+    }
+    .catalogue-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 1px 5px;
+      margin-top: 4px;
+      background: var(--forest-dim);
+      color: var(--forest);
+      border: 1px solid var(--forest-border);
+    }
+    .catalogue-more {
+      text-align: center;
+      padding: 1.25rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      border: 1px solid var(--rule);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .catalogue-more:hover { background: var(--parchment); }
+
+    /* ── THE KITCHEN ── */
+    .kitchen-section { background: var(--parchment); }
+    .kitchen-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 680px) { .kitchen-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    .kitchen-body {
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .kitchen-body p { margin-bottom: 1rem; }
+    .kitchen-body p:last-child { margin-bottom: 0; }
+    .kitchen-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink-mid);
+      border-left: 2px solid var(--gold);
+      padding: 0.75rem 1.25rem;
+      margin: 1.5rem 0;
+      line-height: 1.6;
+    }
+    .identity-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .identity-row {
+      background: var(--cream);
+      padding: 1.1rem 1.25rem;
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .identity-row.active { background: var(--parchment-deep); }
+    .identity-station {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--ink-light);
+      text-transform: uppercase;
+      padding-top: 0.15rem;
+    }
+    .identity-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.15rem;
+    }
+    .identity-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--ink-mid);
+      margin-bottom: 0.3rem;
+    }
+    .identity-desc {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.55;
+    }
+
+    /* ── TEST KITCHEN ── */
+    .test-kitchen-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .test-kitchen-card {
+      background: var(--cream);
+      padding: 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+      display: block;
+    }
+    .test-kitchen-card:hover { background: var(--parchment); }
+    .tk-register {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .tk-register-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .tk-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+      line-height: 1.2;
+    }
+    .tk-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--ink-mid);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    .tk-body {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+    }
+    .tk-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate);
+      border-bottom: 1px dotted var(--slate);
+      text-decoration: none;
+    }
+
+    /* ── RESERVATIONS ── */
+    .reservations-section { background: var(--ink); color: var(--cream); }
+    .reservations-section .section-kicker { color: rgba(250,247,242,0.4); }
+    .reservations-section .section-title { color: var(--cream); }
+    .reservations-section .section-title em { color: rgba(250,247,242,0.5); }
+    .res-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(250,247,242,0.1);
+      border: 1px solid rgba(250,247,242,0.1);
+    }
+    @media (max-width: 600px) { .res-grid { grid-template-columns: 1fr; } }
+    .res-card {
+      background: var(--ink);
+      padding: 2rem;
+      text-decoration: none;
+      display: block;
+      transition: background 0.15s;
+    }
+    .res-card:hover { background: #1a1916; }
+    .res-card-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.3);
+      margin-bottom: 0.75rem;
+    }
+    .res-card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+    .res-card-body {
+      font-size: 14px;
+      color: rgba(250,247,242,0.55);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .res-card-action {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.4);
+      border-bottom: 1px solid rgba(250,247,242,0.15);
+      padding-bottom: 1px;
+      display: inline-block;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .res-card:hover .res-card-action { color: var(--cream); border-color: rgba(250,247,242,0.4); }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid rgba(250,247,242,0.08);
+      background: var(--ink);
+      padding: 2rem;
+    }
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(250,247,242,0.4);
+      letter-spacing: -0.01em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.25);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-link:hover { color: rgba(250,247,242,0.5); }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      color: rgba(250,247,242,0.15);
+    }
+
+    /* ── UTILITIES ── */
+    .divider { border: none; border-top: 1px solid var(--rule); margin: 2rem 0; }
+    .gold-accent { color: var(--gold); }
+    .forest-accent { color: var(--forest); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero-inner { padding: 3rem 1.25rem 2.5rem; }
+      .section-inner { padding: 2.5rem 1.25rem; }
+      .kitchen-grid { grid-template-columns: 1fr; }
+      .prix-fixe-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── TOPBAR ── -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="topbar-brand" href="/">
+        <span class="topbar-brand-kicker">crooney.ca</span>
+        <span class="topbar-brand-name">George <em>Crooney</em></span>
+      </a>
+      <nav class="subnav">
+        <a class="subnav-link" href="/#service">Tonight</a>
+        <a class="subnav-link active" href="/prix-fixe.html">Prix Fixe</a>
+        <a class="subnav-link" href="/#catalogue">À La Carte</a>
+        <a class="subnav-link" href="/#kitchen">About</a>
+        <a class="subnav-link" href="/#test-kitchen">Test Kitchen</a>
+        <a class="subnav-link" href="/#reservations">Reservations</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── PRIX FIXE ── -->
+  <section class="section" id="prix-fixe" style="padding-top:3rem;">
+    <div class="section-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Curated Sets · Prix Fixe</div>
+          <div class="section-title">More Prix-Fixe Menus</div>
+        </div>
+        <a class="section-link" href="/">← Back to Crooney Interactive</a>
+      </div>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--ink-mid);max-width:560px;margin-bottom:2rem;line-height:1.65;">A prix fixe set is a sequenced tasting menu — songs chosen for the arc of an evening, not just the moment. Each set has a name, a logic, and a reason the songs appear in the order they do.</p>
+
+      <div class="prix-fixe-grid">
+
+      <div class="prix-fixe-grid">
+
+        <!-- April Showers Vol. 1 — featured -->
+        <div class="prix-fixe-card featured">
+          <div class="featured-badge">Current Release</div>
+          <div class="prix-fixe-num">Vol. 1 · April 2026</div>
+          <div class="prix-fixe-title">April Showers</div>
+          <div class="prix-fixe-subtitle">12 courses confirmed · 14 performed live April 26 · design variable open</div>
+          <ul class="prix-fixe-courses">
+            <li class="prix-fixe-course"><span class="course-num">A1</span><span><span class="course-name">The Last Farewell</span> <span class="course-artist">Elvis Presley</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A2</span><span><span class="course-name">Memories</span> <span class="course-artist">Elvis Presley</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A3</span><span><span class="course-name">Memories Are Made of This</span> <span class="course-artist">Dean Martin</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A4</span><span><span class="course-name">Sway</span> <span class="course-artist">Dean Martin</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A5</span><span><span class="course-name">You Make Me Feel So Young</span> <span class="course-artist">Frank Sinatra</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A6</span><span><span class="course-name">He Ain't Heavy He's My Brother</span> <span class="course-artist">Neil Diamond</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B1</span><span><span class="course-name">Song Sung Blue</span> <span class="course-artist">Neil Diamond</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B2</span><span><span class="course-name">Can't Take My Eyes Off You</span> <span class="course-artist">Andy Williams</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B5</span><span><span class="course-name">Days Like This</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B6</span><span><span class="course-name">A Rainy Night in Soho</span> <span class="course-artist">The Pogues</span></span></li>
+          </ul>
+          <div class="prix-fixe-footer">
+            <span class="prix-fixe-count">12 songs · 2 sides</span>
+            <a class="prix-fixe-link" href="https://soundtrap.crooney.ca" target="_blank">Production sessions →</a>
+          </div>
+        </div>
+
+        <!-- Van Morrison Set -->
+        <div class="prix-fixe-card">
+          <div class="prix-fixe-num">Game 6 · St. Patrick's Day 2026</div>
+          <div class="prix-fixe-title">The Van Morrison Set</div>
+          <div class="prix-fixe-subtitle">12 courses · 44:55 · Fionn MacCool's Vancouver</div>
+          <ul class="prix-fixe-courses">
+            <li class="prix-fixe-course"><span class="course-num">A1</span><span><span class="course-name">Moondance</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A2</span><span><span class="course-name">Real Real Gone</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A3</span><span><span class="course-name">Wild Night</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A4</span><span><span class="course-name">Tupelo Honey</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A5</span><span><span class="course-name">Gloria</span> <span class="course-artist">Them feat. Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B1</span><span><span class="course-name">Into the Mystic</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B3</span><span><span class="course-name">Days Like This</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B6</span><span><span class="course-name">Domino</span> <span class="course-artist">Van Morrison</span></span></li>
+          </ul>
+          <div class="prix-fixe-footer">
+            <span class="prix-fixe-count">12 songs · 44:55</span>
+            <a class="prix-fixe-link" href="https://open.spotify.com/user/8d3wq95j8sr2xk6wyqlwjh34z" target="_blank">Doctor Obscurity on Spotify →</a>
+          </div>
+        </div>
+
+        <!-- Ten Innings in the Spring -->
+        <div class="prix-fixe-card">
+          <div class="prix-fixe-num">Game 7 · March 28, 2026 · MLB Opening Weekend</div>
+          <div class="prix-fixe-title">Ten Innings in the Spring</div>
+          <div class="prix-fixe-subtitle">10 courses · 40:37 · Cambie Village</div>
+          <ul class="prix-fixe-courses">
+            <li class="prix-fixe-course"><span class="course-num">A1</span><span><span class="course-name">Someday Never Comes</span> <span class="course-artist">CCR</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A2</span><span><span class="course-name">A Life of Illusion</span> <span class="course-artist">Joe Walsh</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A3</span><span><span class="course-name">Crazy Love</span> <span class="course-artist">Van Morrison</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A4</span><span><span class="course-name">50 Ways to Leave Your Lover</span> <span class="course-artist">Paul Simon</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A5</span><span><span class="course-name">Take Me to the River</span> <span class="course-artist">Talking Heads</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B1</span><span><span class="course-name">Thunderstruck</span> <span class="course-artist">AC/DC</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B2</span><span><span class="course-name">Sin City</span> <span class="course-artist">AC/DC</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B3</span><span><span class="course-name">Pagan Baby</span> <span class="course-artist">CCR</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B4</span><span><span class="course-name">Can't You See</span> <span class="course-artist">Marshall Tucker Band</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B5</span><span><span class="course-name">Against the Wind</span> <span class="course-artist">Bob Seger</span></span></li>
+          </ul>
+          <div class="prix-fixe-footer">
+            <span class="prix-fixe-count">10 songs · 40:37</span>
+            <a class="prix-fixe-link" href="https://open.spotify.com/playlist/0dSa0wXNQB514b6ku11yAH" target="_blank">Spotify →</a>
+          </div>
+        </div>
+
+        <!-- Maytallica Flowers -->
+        <div class="prix-fixe-card">
+          <div class="prix-fixe-num">Pool 8 · 2026</div>
+          <div class="prix-fixe-title">Maytallica Flowers</div>
+          <div class="prix-fixe-subtitle">7 courses · 36:59</div>
+          <ul class="prix-fixe-courses">
+            <li class="prix-fixe-course"><span class="course-num">A1</span><span><span class="course-name">Going to California</span> <span class="course-artist">Led Zeppelin</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A2</span><span><span class="course-name">Always</span> <span class="course-artist">The Mayfield Four</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A3</span><span><span class="course-name">Automatic Flowers</span> <span class="course-artist">Our Lady Peace</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">A4</span><span><span class="course-name">Nothing Else Matters</span> <span class="course-artist">Metallica</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B1</span><span><span class="course-name">Maggie May</span> <span class="course-artist">Rod Stewart</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B2</span><span><span class="course-name">You May Be Right</span> <span class="course-artist">Billy Joel</span></span></li>
+            <li class="prix-fixe-course"><span class="course-num">B3</span><span><span class="course-name">Tuesday's Gone</span> <span class="course-artist">Metallica</span></span></li>
+          </ul>
+          <div class="prix-fixe-footer">
+            <span class="prix-fixe-count">7 songs · 36:59</span>
+            <a class="prix-fixe-link" href="https://soundtrap.crooney.ca" target="_blank">Sessions →</a>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">George Crooney · Crooney Interactive</div>
+      <div class="footer-links">
+        <a class="footer-link" href="https://soundtrap.crooney.ca" target="_blank">Soundtrap</a>
+        <a class="footer-link" href="https://phd.crooney.ca" target="_blank">PhD</a>
+        <a class="footer-link" href="https://aries.crooney.ca" target="_blank">ARIES</a>
+        <a class="footer-link" href="https://open.spotify.com/user/8d3wq95j8sr2xk6wyqlwjh34z" target="_blank">Spotify</a>
+        <a class="footer-link" href="mailto:george@crooney.ca">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 · 1730 Technology Consulting Inc.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
