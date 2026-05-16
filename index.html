@@ -261,6 +261,7 @@
       align-items: center;
       gap: 1rem;
     }
+    .hero-kicker::before,
     .hero-kicker::after {
       content: '';
       flex: 1;
@@ -608,9 +609,136 @@
     .catalogue-item {
       background: var(--cream);
       padding: 0.85rem 1rem;
-      transition: background 0.12s;
+      transition: background 0.12s, border-color 0.12s;
+      cursor: pointer;
+      position: relative;
+      border: 1px solid transparent;
     }
     .catalogue-item:hover { background: var(--parchment); }
+    .catalogue-item.in-setlist {
+      background: var(--gold-dim);
+      border-color: var(--gold-border);
+    }
+    .catalogue-item.in-setlist::after {
+      content: '✓';
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--gold);
+    }
+    body:not([data-theme]) .catalogue-tag,
+    body:not([data-theme]) .filter-btn[onclick*="session"] { display: none; }
+    .setlist-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 0.9rem 1.5rem;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      transform: translateY(100%);
+      transition: transform 0.25s ease-out;
+    }
+    .setlist-bar.visible { display: flex; transform: translateY(0); }
+    .setlist-bar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .setlist-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      flex: 1;
+      min-width: 200px;
+    }
+    .setlist-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.1rem;
+      border: 1px solid rgba(250,247,242,0.25);
+      background: transparent;
+      color: var(--cream);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .setlist-btn:hover { border-color: var(--cream); background: rgba(250,247,242,0.08); }
+    .setlist-btn.primary { background: var(--gold); border-color: var(--gold); color: var(--cream); }
+    .setlist-btn.primary:hover { filter: brightness(1.1); }
+    .setlist-list {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99;
+      background: var(--cream);
+      border-top: 1px solid var(--rule);
+      max-height: 60vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      display: none;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    }
+    .setlist-list.visible { display: block; }
+    .setlist-list-inner { max-width: var(--max-w); margin: 0 auto; }
+    .setlist-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .setlist-list-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+    .setlist-list-close {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--ink-mid);
+      padding: 0.25rem 0.5rem;
+    }
+    .setlist-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .setlist-list-item:last-child { border-bottom: none; }
+    .setlist-list-remove {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-light);
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .setlist-list-remove:hover { color: var(--gold); }
     .catalogue-song {
       font-size: 13px;
       color: var(--ink);
@@ -1032,8 +1160,8 @@
       <div class="service-empty">
         <div class="service-empty-dot"></div>
         <div>
-          <div class="service-empty-label">Kitchen Status — Off-Service</div>
-          <div class="service-empty-body">No dates currently on the books. The repertoire is available for private events, venue nights, and parties. The kitchen opens on request.</div>
+          <div class="service-empty-label">Upcoming Events</div>
+          <div class="service-empty-body">No dates currently on the books. Available for private events, venue nights, and parties — the next gig's details will appear here.</div>
         </div>
       </div>
     </div>
@@ -1311,6 +1439,25 @@
     </div>
   </footer>
 
+  <!-- ── SETLIST REQUEST BAR ── -->
+  <div class="setlist-list" id="setlist-list" aria-hidden="true">
+    <div class="setlist-list-inner">
+      <div class="setlist-list-header">
+        <div class="setlist-list-title">Your Setlist Request</div>
+        <button class="setlist-list-close" onclick="toggleSetlistList()" aria-label="Close">✕</button>
+      </div>
+      <div id="setlist-list-items"></div>
+    </div>
+  </div>
+  <div class="setlist-bar" id="setlist-bar" role="region" aria-label="Setlist request bar">
+    <div class="setlist-bar-inner">
+      <div class="setlist-count" id="setlist-count">0 songs in your setlist</div>
+      <button class="setlist-btn" onclick="toggleSetlistList()">Review</button>
+      <button class="setlist-btn" onclick="clearSetlist()">Clear</button>
+      <a class="setlist-btn primary" id="setlist-submit" href="#">Submit Request →</a>
+    </div>
+  </div>
+
   <script>
     // ── THEME SWITCHER ──
     function setTheme(theme, btn) {
@@ -1398,6 +1545,86 @@
       });
     }, { threshold: 0.3 });
     sections.forEach(s => observer.observe(s));
+
+    // ── SETLIST REQUEST ──
+    const SETLIST_KEY = 'crooney.setlist';
+    function readSetlist() {
+      try { return JSON.parse(localStorage.getItem(SETLIST_KEY)) || []; }
+      catch (e) { return []; }
+    }
+    function writeSetlist(list) {
+      localStorage.setItem(SETLIST_KEY, JSON.stringify(list));
+    }
+    function songKey(song, artist) { return `${song}||${artist}`; }
+    function renderSetlist() {
+      const list = readSetlist();
+      const bar = document.getElementById('setlist-bar');
+      const count = document.getElementById('setlist-count');
+      const submit = document.getElementById('setlist-submit');
+      const items = document.getElementById('setlist-list-items');
+      const drawer = document.getElementById('setlist-list');
+      const n = list.length;
+      if (n === 0) {
+        bar.classList.remove('visible');
+        drawer.classList.remove('visible');
+      } else {
+        bar.classList.add('visible');
+      }
+      count.textContent = `${n} song${n === 1 ? '' : 's'} in your setlist`;
+      // mark selected tiles
+      const selectedKeys = new Set(list.map(s => songKey(s.song, s.artist)));
+      document.querySelectorAll('.catalogue-item').forEach(el => {
+        const song = el.querySelector('.catalogue-song')?.textContent.trim();
+        const artist = el.querySelector('.catalogue-artist')?.textContent.trim();
+        if (!song) return;
+        if (selectedKeys.has(songKey(song, artist))) el.classList.add('in-setlist');
+        else el.classList.remove('in-setlist');
+      });
+      // drawer
+      items.innerHTML = list.map((s, i) => `
+        <div class="setlist-list-item">
+          <div><strong>${s.song}</strong> — <span style="color:var(--ink-mid)">${s.artist}</span></div>
+          <button class="setlist-list-remove" data-i="${i}">Remove</button>
+        </div>
+      `).join('') || '<div style="color:var(--ink-mid);font-style:italic;">No songs added yet.</div>';
+      items.querySelectorAll('.setlist-list-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.dataset.i, 10);
+          const cur = readSetlist();
+          cur.splice(i, 1);
+          writeSetlist(cur);
+          renderSetlist();
+        });
+      });
+      // mailto
+      const subject = `Setlist Request — ${n} song${n === 1 ? '' : 's'}`;
+      const bodyLines = list.map((s, i) => `${i + 1}. ${s.song} — ${s.artist}`).join('\n');
+      const body = `Hi George,\n\nI'd like to request the following setlist:\n\n${bodyLines}\n\n(Event details, date, and venue below.)\n\n—\n`;
+      submit.href = `mailto:george@crooney.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+    function toggleSetlistItem(el) {
+      const song = el.querySelector('.catalogue-song')?.textContent.trim();
+      const artist = el.querySelector('.catalogue-artist')?.textContent.trim();
+      if (!song) return;
+      const list = readSetlist();
+      const key = songKey(song, artist);
+      const idx = list.findIndex(s => songKey(s.song, s.artist) === key);
+      if (idx >= 0) list.splice(idx, 1);
+      else list.push({ song, artist });
+      writeSetlist(list);
+      renderSetlist();
+    }
+    function toggleSetlistList() {
+      document.getElementById('setlist-list').classList.toggle('visible');
+    }
+    function clearSetlist() {
+      writeSetlist([]);
+      renderSetlist();
+    }
+    document.querySelectorAll('.catalogue-item').forEach(el => {
+      el.addEventListener('click', () => toggleSetlistItem(el));
+    });
+    renderSetlist();
   </script>
 
 
