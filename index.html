@@ -225,6 +225,7 @@
     }
     .topbar-cta:hover { background: var(--forest); }
     body:not([data-theme]) .subnav-link.default-hide { display: none; }
+    body[data-theme="jukebox"] .subnav-link.jukebox-hide { display: none; }
 
     /* ── HERO ── */
     .hero {
@@ -1084,19 +1085,14 @@
       <nav class="subnav">
         <a class="subnav-link" href="#service">
           <span data-default>Products</span>
-          <span data-culinary="">Service</span>
-          <span data-jukebox="">The Set</span>
-          <span data-curriculum="">Session</span>
-        </a>
-        <a class="subnav-link default-hide" href="/prix-fixe.html">
           <span data-culinary="">Prix Fixe</span>
           <span data-jukebox="">Featured Sets</span>
-          <span data-curriculum="">Curriculum</span>
+          <span data-curriculum="">Programmes</span>
         </a>
         <a class="subnav-link active" href="#catalogue">
           <span data-default>Services</span>
           <span data-culinary="">À La Carte</span>
-          <span data-jukebox="">Select &amp; Play</span>
+          <span data-jukebox="">Request Songs</span>
           <span data-curriculum="">Lessons</span>
         </a>
         <a class="subnav-link" href="#kitchen">About</a>
@@ -1109,7 +1105,7 @@
         <a class="subnav-link" href="#reservations">
           <span data-default>Licences</span>
           <span data-culinary="">Book an Event</span>
-          <span data-jukebox="">Book the Venue</span>
+          <span data-jukebox="">Venues</span>
           <span data-curriculum="">Register</span>
         </a>
       </nav>
@@ -1434,27 +1430,23 @@
         </div>
       </div>
       <div class="res-grid">
-        <a class="res-card" href="mailto:drgeorgecrooney@gmail.com">
+        <a class="res-card" href="mailto:drgeorgecrooney@gmail.com?subject=Bookings%20%26%20Enquiries">
           <div class="res-card-kicker">Private Events &amp; Venue Bookings</div>
-          <div class="res-card-title">Book a Show</div>
+          <div class="res-card-title">Bookings &amp; Enquiries</div>
           <div class="res-card-body">
+            <span style="display:block;margin-bottom:0.6rem;">Click here to email George directly — the easiest way to reach out. He reads every message and replies personally.</span>
             <span data-default>Weddings, parties, corporate events, community nights, venue residencies — the show shapes itself to fit the room.</span>
             <span data-culinary="">Weddings, parties, corporate events, community nights, venue residencies. The show shapes itself to fit the room — à la carte or a curated prix fixe set for the occasion.</span>
             <span data-jukebox="">Parties, venue nights, corporate events, community floors. The set shapes itself to fit the room — open floor requests or a featured set for the occasion.</span>
             <span data-curriculum="">Workshops, institutional events, community learning nights, venue residencies. The curriculum shapes itself to fit the room — individual lessons or a designed program for the occasion.</span>
           </div>
-          <span class="res-card-action">
-            <span data-default>Bookings →</span>
-            <span data-culinary="">Start a booking →</span>
-            <span data-jukebox="">Reserve the floor →</span>
-            <span data-curriculum="">Register →</span>
-          </span>
+          <span class="res-card-action">Email George →</span>
         </a>
-        <a class="res-card" href="mailto:drgeorgecrooney@gmail.com?subject=Collaboration%20Enquiry">
+        <a class="res-card" href="https://soundtrap.crooney.ca" target="_blank">
           <div class="res-card-kicker">Travels in Intertextuality · Soundtrap Sessions</div>
           <div class="res-card-title">Artist Collaboration</div>
-          <div class="res-card-body">For producers, engineers, and collaborators interested in the Soundtrap sessions, the Box Set 2026, or the broader research platform. The test kitchen is available by invitation.</div>
-          <span class="res-card-action">Request access →</span>
+          <div class="res-card-body">Remote recording collaborations are possible through the Soundtrap platform — producers, engineers, and artists can contribute to sessions from anywhere in the world. Browse the project archive at the link below, then request access through Bookings &amp; Enquiries.</div>
+          <span class="res-card-action">soundtrap.crooney.ca →</span>
         </a>
         <a class="res-card" href="https://open.spotify.com/user/8d3wq95j8sr2xk6wyqlwjh34z" target="_blank">
           <div class="res-card-kicker">Spotify, Apple Music, Tidal, More…</div>
