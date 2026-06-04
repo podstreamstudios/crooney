@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stays — Campbell River Lodge · North Island Film Country</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --ink: #0e0d0b;
+  --gold: #c8a96a;
+  --teal: #4a7c6f;
+  --river: #2a5a4a;
+  --film: #1a1a2e;
+  --rule: rgba(14,13,11,0.1);
+  --max-w: 1100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* NAV */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(14,13,11,0.96);
+  border-bottom: 0.5px solid rgba(250,247,242,0.08);
+  backdrop-filter: blur(12px);
+}
+.topbar-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 0 2rem;
+  display: flex; align-items: center;
+  overflow-x: auto; scrollbar-width: none;
+}
+.topbar-inner::-webkit-scrollbar { display: none; }
+.topbar-brand {
+  display: flex; flex-direction: column;
+  padding: 0.6rem 1.5rem 0.4rem 0;
+  border-right: 0.5px solid rgba(250,247,242,0.08);
+  text-decoration: none; flex-shrink: 0;
+}
+.topbar-brand img { height: 30px; width: auto; display: block; }
+.topbar-brand-kicker {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(250,247,242,0.55); margin-top: 2px;
+}
+.subnav { display: flex; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav-link {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(250,247,242,0.5); text-decoration: none;
+  padding: 1rem 1.1rem; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.subnav-link:hover { color: rgba(250,247,242,0.9); }
+.subnav-link.active { color: #fff; border-bottom-color: var(--gold); }
+
+/* HERO */
+.hero {
+  background: var(--river);
+  padding: 6rem 2rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(42,90,74,0.95) 0%, rgba(14,13,11,0.7) 100%);
+}
+.hero-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.25rem;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 300; line-height: 1.08; color: var(--cream);
+  margin-bottom: 1.5rem;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 1.1rem; font-weight: 300; font-style: italic;
+  color: rgba(250,247,242,0.7); max-width: 580px; line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+.hero-tags { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero-tag {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px;
+  border: 0.5px solid rgba(250,247,242,0.25);
+  color: rgba(250,247,242,0.65);
+}
+
+/* CONTENT */
+.page-body { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+
+/* PITCH SECTION */
+.pitch-section {
+  padding: 5rem 0;
+  border-bottom: 0.5px solid var(--rule);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+}
+.pitch-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(14,13,11,0.35); margin-bottom: 1.25rem;
+}
+.pitch-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 300; color: var(--ink); line-height: 1.15; margin-bottom: 1.25rem;
+}
+.pitch-body p {
+  font-size: 1rem; color: rgba(14,13,11,0.68);
+  line-height: 1.88; margin-bottom: 1rem;
+}
+.pitch-body p strong { font-weight: 400; color: var(--ink); }
+.pitch-body p em { font-style: italic; color: rgba(14,13,11,0.85); }
+.pitch-body p:last-child { margin-bottom: 0; }
+
+/* CHANNEL DIAGRAM */
+.channel {
+  display: flex; flex-direction: column; gap: 1px;
+  border: 0.5px solid var(--rule); border-radius: 8px; overflow: hidden;
+}
+.channel-step {
+  padding: 1.5rem 1.75rem;
+  background: #fff;
+  border-bottom: 0.5px solid var(--rule);
+  display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start;
+}
+.channel-step:last-child { border-bottom: none; }
+.channel-step:nth-child(even) { background: #faf9f7; }
+.step-num {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; color: rgba(14,13,11,0.3);
+  padding-top: 2px;
+}
+.step-content {}
+.step-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.step-desc {
+  font-size: 0.88rem; color: rgba(14,13,11,0.55); line-height: 1.6;
+}
+.step-tag {
+  display: inline-block; margin-top: 0.4rem;
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--teal);
+}
+
+/* PARTNERS */
+.partners-section {
+  padding: 5rem 0;
+  border-bottom: 0.5px solid var(--rule);
+}
+.partners-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem;
+}
+.partner-card {
+  border: 0.5px solid var(--rule); border-radius: 8px;
+  overflow: hidden; text-decoration: none;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  display: block;
+}
+.partner-card:hover { border-color: rgba(14,13,11,0.25); box-shadow: 0 4px 20px rgba(14,13,11,0.06); }
+.partner-header {
+  padding: 1.75rem 2rem 1.25rem;
+  border-bottom: 0.5px solid var(--rule);
+  background: #fff;
+}
+.partner-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(14,13,11,0.3); margin-bottom: 0.4rem;
+}
+.partner-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+.partner-url {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.15em; color: rgba(14,13,11,0.3);
+}
+.partner-body { padding: 1.5rem 2rem; background: #faf9f7; }
+.partner-body p {
+  font-size: 0.92rem; color: rgba(14,13,11,0.62); line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+.partner-body p:last-child { margin-bottom: 0; }
+.partner-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  margin-top: 1rem;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(14,13,11,0.4); text-decoration: none;
+  border-bottom: 0.5px solid rgba(14,13,11,0.15); padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.partner-link svg { width: 11px; height: 11px; transition: transform 0.2s; }
+.partner-link:hover { color: var(--teal); border-bottom-color: var(--teal); }
+.partner-link:hover svg { transform: translateX(2px); }
+
+/* REVENUE MODEL */
+.revenue-section { padding: 5rem 0; border-bottom: 0.5px solid var(--rule); }
+.revenue-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+  background: var(--rule); border: 0.5px solid var(--rule);
+  border-radius: 8px; overflow: hidden; margin-top: 2.5rem;
+}
+.revenue-cell {
+  background: #fff; padding: 2rem 1.75rem;
+}
+.revenue-cell:nth-child(2) { background: #faf9f7; }
+.rev-label {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(14,13,11,0.3); margin-bottom: 0.75rem;
+}
+.rev-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem; font-weight: 400; color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.rev-desc { font-size: 0.88rem; color: rgba(14,13,11,0.55); line-height: 1.6; }
+.rev-note {
+  margin-top: 0.75rem;
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.12em; color: var(--teal);
+}
+
+/* CTA */
+.cta-section {
+  padding: 5rem 0;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 3rem; flex-wrap: wrap;
+}
+.cta-text {}
+.cta-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 300; color: var(--ink); line-height: 1.2; margin-bottom: 0.75rem;
+}
+.cta-sub { font-size: 1rem; color: rgba(14,13,11,0.55); font-style: italic; }
+.cta-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--ink); color: var(--cream);
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  text-decoration: none; border-radius: 4px;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--river); }
+.btn-primary svg { width: 12px; height: 12px; }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  border: 0.5px solid rgba(14,13,11,0.2); color: rgba(14,13,11,0.6);
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  text-decoration: none; border-radius: 4px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--ink); color: var(--ink); }
+
+/* FOOTER */
+.page-footer {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 2.5rem 2rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(14,13,11,0.3);
+}
+.footer-note {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85rem; font-style: italic; color: rgba(14,13,11,0.3);
+}
+
+@media (max-width: 640px) {
+  .pitch-section, .partners-grid, .revenue-grid { grid-template-columns: 1fr; }
+  .cta-section { flex-direction: column; align-items: flex-start; }
+  .topbar-inner, .page-body, .page-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .hero { padding: 4rem 1.25rem 3.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="../index.html" class="topbar-brand">
+      <img src="../logo.png" alt="Crooney.ca">
+      <span class="topbar-brand-kicker">Crooney Interactive</span>
+    </a>
+    <nav class="subnav">
+      <a href="../ecosystem/" class="subnav-link">Ecosystem</a>
+      <a href="../#songs" class="subnav-link">Songs</a>
+      <a href="../#sets" class="subnav-link">Sets</a>
+      <a href="./index.html" class="subnav-link active">Stays</a>
+      <a href="https://tidemarktheatre.com" class="subnav-link" target="_blank">Events</a>
+      <a href="https://lab.crooney.ca" class="subnav-link" target="_blank">Lab</a>
+      <a href="https://phd.crooney.ca" class="subnav-link" target="_blank">PhD</a>
+    </nav>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Campbell River · North Island · Film Country</p>
+    <h1 class="hero-title">Where the crew stays<br>is part of the <em>production.</em></h1>
+    <p class="hero-sub">Campbell River Lodge sits on the same river Haig-Brown fished and Bing Crosby cast his line. For film crews scouting the North Island, it's not just accommodation — it's the location itself.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Film location scouting</span>
+      <span class="hero-tag">Campbell River Lodge</span>
+      <span class="hero-tag">North Island BC</span>
+      <span class="hero-tag">INFilm.ca partner</span>
+      <span class="hero-tag">Crew accommodation</span>
+    </div>
+  </div>
+</section>
+
+<div class="page-body">
+
+  <section class="pitch-section">
+    <div>
+      <p class="pitch-label">The opportunity</p>
+      <h2 class="pitch-heading">A location that books the accommodation.</h2>
+      <div class="pitch-body">
+        <p>Film crews scouting the North Island through INFilm.ca are already looking for locations with the qualities Campbell River offers — wild rivers, old-growth forests, dramatic coastline, and the cultural heritage of one of BC's most storied fishing destinations.</p>
+        <p>The gap: <strong>location scouting and crew accommodation are currently handled as separate problems.</strong> A crew that finds their location on the North Island still needs to find somewhere for 20–80 people to stay, eat, and work for weeks at a time.</p>
+        <p>Campbell River Lodge is not just a hotel near the locations. <em>It is a location.</em> The outdoor riverbank, the Goose & Gander, the dock, the mountain backdrop — these are production assets that also happen to sleep and feed a full crew.</p>
+        <p>The channel this page proposes: <strong>INFilm.ca surfaces the North Island as a film destination → Campbell River Lodge captures the accommodation booking → a commission flows to the connector who made the introduction.</strong></p>
+      </div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <div class="step-title">Production discovers North Island</div>
+          <div class="step-desc">Film crew searches INFilm.ca for BC locations. North Island surfaces as a viable region for their project — river, forest, coastal, heritage.</div>
+          <span class="step-tag">INFilm.ca → location database</span>
+        </div>
+      </div>
+      <div class="channel-step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <div class="step-title">Campbell River Lodge presented as base</div>
+          <div class="step-desc">The lodge is surfaced not just as accommodation but as a production-ready base: full crew capacity, outdoor locations on property, catering infrastructure, riverbank access.</div>
+          <span class="step-tag">Stays → Lodge booking page</span>
+        </div>
+      </div>
+      <div class="channel-step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <div class="step-title">Crew books the Lodge</div>
+          <div class="step-desc">Accommodation, catering, and location use are booked together. The Lodge fills for the duration of the production — potentially the entire property.</div>
+          <span class="step-tag">Lodge → full property buyout</span>
+        </div>
+      </div>
+      <div class="channel-step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <div class="step-title">Commission on the booking</div>
+          <div class="step-desc">Crooney Interactive earns a referral commission on accommodation bookings sourced through the INFilm.ca → Stays channel. Repeatable across productions.</div>
+          <span class="step-tag">Revenue → Crooney Interactive</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="partners-section">
+    <p class="pitch-label">The partners</p>
+    <h2 class="pitch-heading" style="font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:300;color:var(--ink);line-height:1.15;margin-bottom:0;">Two platforms. One channel.</h2>
+    <div class="partners-grid">
+      <a class="partner-card" href="https://www.infilm.ca" target="_blank" rel="noopener">
+        <div class="partner-header">
+          <p class="partner-eyebrow">Location database · BC Film</p>
+          <p class="partner-name">INFilm.ca</p>
+          <p class="partner-url">infilm.ca</p>
+        </div>
+        <div class="partner-body">
+          <p>BC's film location platform — connecting productions with locations across the province. The North Island is an underdeveloped node in the database: extraordinary locations, limited marketing reach to productions scouting at scale.</p>
+          <p>INFilm.ca is the top-of-funnel. Productions arrive there looking for locations. Campbell River Lodge needs to be visible as a destination, not just an accommodation option.</p>
+          <a class="partner-link" href="https://www.infilm.ca" target="_blank" rel="noopener">
+            Visit INFilm.ca
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </a>
+
+      <a class="partner-card" href="https://vanisle.crooney.ca" target="_blank" rel="noopener">
+        <div class="partner-header">
+          <p class="partner-eyebrow">Venue · Accommodation · Location</p>
+          <p class="partner-name">Campbell River Lodge</p>
+          <p class="partner-url">Campbell River, BC · Goose & Gander</p>
+        </div>
+        <div class="partner-body">
+          <p>On the banks of the Campbell River — the same river Roderick Haig-Brown wrote about and Bing Crosby fished. The Lodge is a full-service hospitality property with outdoor riverbank space, event catering, and enough accommodation to house a production crew.</p>
+          <p>The outdoor terrace, dock access, mountain backdrop, and old-growth river setting are production assets. A full-property buyout for a film crew is a viable and significant revenue event for the Lodge.</p>
+          <a class="partner-link" href="https://vanisle.crooney.ca" target="_blank" rel="noopener">
+            See the VanIsle node
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="revenue-section">
+    <p class="pitch-label">The model</p>
+    <h2 class="pitch-heading" style="font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:300;color:var(--ink);line-height:1.15;margin-bottom:0;">Three layers. One commission.</h2>
+    <div class="revenue-grid">
+      <div class="revenue-cell">
+        <p class="rev-label">Layer 1 · Location</p>
+        <p class="rev-title">INFilm.ca surfaces the North Island</p>
+        <p class="rev-desc">Productions searching for BC locations encounter the North Island as a viable film destination through INFilm's existing database and marketing reach.</p>
+        <p class="rev-note">Channel: INFilm.ca location listing</p>
+      </div>
+      <div class="revenue-cell">
+        <p class="rev-label">Layer 2 · Accommodation</p>
+        <p class="rev-title">Stays bridges to the Lodge</p>
+        <p class="rev-desc">This page — crooney.ca/stays — connects the location discovery to the accommodation booking. Campbell River Lodge is presented as the production base, not just a nearby hotel.</p>
+        <p class="rev-note">Channel: Stays → Lodge direct booking</p>
+      </div>
+      <div class="revenue-cell">
+        <p class="rev-label">Layer 3 · Commission</p>
+        <p class="rev-title">Referral fee on accommodation</p>
+        <p class="rev-desc">A negotiated referral commission on Lodge bookings sourced through the Stays channel. Scalable across productions and repeatable across seasons — spring/fall being peak film scouting periods on the North Island.</p>
+        <p class="rev-note">Revenue: Crooney Interactive commission</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-text">
+      <h2 class="cta-heading">Ready to talk about the Lodge?</h2>
+      <p class="cta-sub">This is a concept in development. The conversation starts with the Campbell River Lodge ownership.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="mailto:drgeorgecrooney@gmail.com?subject=Campbell River Lodge — Stays Partnership" class="btn-primary">
+        Start the conversation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="../ecosystem/" class="btn-secondary">
+        Back to the ecosystem
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="page-footer">
+  <span class="footer-brand">Crooney Interactive · crooney.ca/stays</span>
+  <span class="footer-note">A concept in development. The river keeps moving.</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ecosystem — Crooney Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --ink: #0e0d0b;
+  --ink-mid: #7a7268;
+  --ink-light: #b0a898;
+  --rule: rgba(250,247,242,0.08);
+  --gold: #c8a96a;
+  --max-w: 1000px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* NAV */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(14,13,11,0.94);
+  border-bottom: 0.5px solid var(--rule);
+  backdrop-filter: blur(12px);
+}
+.topbar-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 0 2rem;
+  display: flex; align-items: center;
+  overflow-x: auto; scrollbar-width: none;
+}
+.topbar-inner::-webkit-scrollbar { display: none; }
+.topbar-brand {
+  display: flex; flex-direction: column;
+  padding: 0.7rem 1.5rem 0.7rem 0;
+  border-right: 0.5px solid var(--rule);
+  margin-right: 0; text-decoration: none; flex-shrink: 0;
+}
+.topbar-brand-kicker {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-mid);
+}
+.topbar-brand-name {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px;
+  font-weight: 800; color: var(--cream); letter-spacing: -0.02em; line-height: 1.1;
+}
+.subnav { display: flex; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav-link {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-mid); text-decoration: none;
+  padding: 1rem 1.1rem; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.subnav-link:hover { color: var(--cream); }
+.subnav-link.active { color: var(--cream); border-bottom-color: var(--gold); }
+
+/* HEADER */
+.page-header {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 5rem 2rem 2rem;
+}
+.eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 300; line-height: 1.1; color: var(--cream);
+  margin-bottom: 0.75rem;
+}
+.page-sub {
+  font-size: 1rem; color: rgba(250,247,242,0.5);
+  font-style: italic; margin-bottom: 0;
+}
+
+/* GRAPH CONTAINER */
+.graph-section {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 3rem 2rem;
+  border-top: 0.5px solid var(--rule);
+}
+.graph-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(250,247,242,0.2); margin-bottom: 1.5rem;
+}
+
+/* CONTROLS */
+.ctrl-bar {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding: 10px 12px;
+  border: 0.5px solid rgba(250,247,242,0.08);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  background: rgba(250,247,242,0.03);
+}
+.ctrl-sep { width: 0.5px; background: rgba(250,247,242,0.12); margin: 0 4px; align-self: stretch; }
+.ctrl-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(250,247,242,0.25); margin-right: 2px;
+  display: flex; align-items: center;
+}
+.pill {
+  font-size: 11px; padding: 3px 10px; border-radius: 20px;
+  border: 0.5px solid rgba(250,247,242,0.15);
+  background: transparent; color: rgba(250,247,242,0.45);
+  cursor: pointer; transition: all 0.15s; white-space: nowrap; line-height: 1.5;
+}
+.pill:hover { border-color: rgba(250,247,242,0.35); color: var(--cream); }
+.pill.active { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+
+#graph-wrap {
+  position: relative;
+  border: 0.5px solid rgba(250,247,242,0.08);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+svg#g { width: 100%; display: block; }
+
+.info-panel {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(14,13,11,0.92);
+  border: 0.5px solid rgba(250,247,242,0.15);
+  border-radius: 8px; padding: 12px 14px;
+  pointer-events: none; opacity: 0; transition: opacity 0.2s; width: 210px;
+}
+.info-panel.visible { opacity: 1; }
+.ip-domain { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.06em; color: rgba(250,247,242,0.3); margin-bottom: 4px; }
+.ip-title { font-size: 12px; color: var(--cream); margin-bottom: 8px; line-height: 1.5; }
+.ip-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.ip-tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; border: 0.5px solid rgba(250,247,242,0.12); color: rgba(250,247,242,0.45); }
+
+.legend {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 12px;
+  border-top: 0.5px solid rgba(250,247,242,0.06);
+  font-size: 11px; color: rgba(250,247,242,0.35);
+  align-items: center;
+  background: rgba(250,247,242,0.02);
+  border-radius: 0 0 8px 8px;
+}
+
+/* ── TRIPOLAR / PRODUCTION CHAIN ── */
+.tripolar-section {
+  border-top: 0.5px solid var(--rule);
+  padding: 5rem 2rem;
+}
+.tripolar-inner { max-width: var(--max-w); margin: 0 auto; }
+.tripolar-header { margin-bottom: 3rem; }
+.tripolar-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.75rem;
+}
+.tripolar-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 0.5rem;
+}
+.tripolar-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1rem; font-style: italic; color: rgba(250,247,242,0.5);
+}
+.tripolar-narrative { max-width: 680px; margin-bottom: 3.5rem; }
+.tripolar-narrative p {
+  font-size: 1rem; color: rgba(250,247,242,0.72); line-height: 1.88; margin-bottom: 1rem;
+}
+.tripolar-quote {
+  margin: 1.75rem 0; padding: 1.25rem 1.75rem;
+  border-left: 1px solid rgba(250,247,242,0.15);
+}
+.tripolar-quote p {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem; font-style: italic; font-weight: 300;
+  color: rgba(250,247,242,0.85); line-height: 1.7; margin-bottom: 0.6rem;
+}
+.tripolar-quote cite {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(250,247,242,0.4); font-style: normal;
+}
+.production-chain {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px; background: rgba(250,247,242,0.06);
+  border: 0.5px solid rgba(250,247,242,0.06); margin-bottom: 1.5rem;
+}
+.chain-card {
+  background: var(--ink); padding: 2rem 1.75rem;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.chain-role {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(250,247,242,0.3); margin-bottom: 0.25rem;
+}
+.chain-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem; font-weight: 400; font-style: italic;
+  color: var(--cream); line-height: 1.1;
+}
+.chain-mode {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+}
+.chain-phase {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.12em; color: rgba(250,247,242,0.45);
+}
+.chain-attrs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0.25rem 0; }
+.chain-attrs span {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 10px;
+  border: 0.5px solid rgba(250,247,242,0.12); color: rgba(250,247,242,0.5);
+}
+.chain-desc { font-size: 0.88rem; color: rgba(250,247,242,0.6); line-height: 1.7; margin-top: 0.5rem; }
+.chain-card--rd   .chain-mode { color: #993C1D; }
+.chain-card--rd   .chain-attrs span { border-color: rgba(153,60,29,0.3); color: rgba(153,60,29,0.9); }
+.chain-card--prod .chain-mode { color: #185FA5; }
+.chain-card--prod .chain-attrs span { border-color: rgba(24,95,165,0.3); color: rgba(24,95,165,0.9); }
+.chain-card--live .chain-mode { color: #0F6E56; }
+.chain-card--live .chain-attrs span { border-color: rgba(15,110,86,0.3); color: rgba(15,110,86,0.9); }
+.chain-footnote {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.12em; color: rgba(250,247,242,0.3); line-height: 1.8;
+}
+
+/* ABOUT SECTION */
+.about-section {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+  border-top: 0.5px solid var(--rule);
+  display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start;
+}
+.about-left {}
+.about-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(250,247,242,0.25); margin-bottom: 1.5rem;
+}
+.about-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.8rem; font-weight: 300; color: var(--cream);
+  line-height: 1.15; margin-bottom: 0.5rem;
+}
+.about-title {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(250,247,242,0.35); line-height: 1.8; margin-bottom: 1.5rem;
+}
+.linkedin-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(250,247,242,0.35); text-decoration: none;
+  border-bottom: 0.5px solid rgba(250,247,242,0.15); padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.linkedin-link svg { width: 11px; height: 11px; transition: transform 0.2s; }
+.linkedin-link:hover { color: var(--gold); border-bottom-color: var(--gold); }
+.linkedin-link:hover svg { transform: translateX(2px); }
+
+.about-right {}
+.about-pullquote {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1rem; font-style: italic; font-weight: 300;
+  color: rgba(250,247,242,0.6); line-height: 1.75;
+  border-left: 1px solid rgba(250,247,242,0.12);
+  padding-left: 1.5rem; margin-bottom: 2rem;
+}
+.about-pullquote cite {
+  display: block; margin-top: 0.5rem;
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(250,247,242,0.25); font-style: normal;
+}
+.about-body p {
+  font-size: 1rem; color: rgba(250,247,242,0.58);
+  line-height: 1.88; margin-bottom: 1.1rem;
+}
+.about-body p em { font-style: italic; color: rgba(250,247,242,0.85); }
+.about-body p strong { font-weight: 400; color: var(--cream); }
+.about-body p:last-child { margin-bottom: 0; }
+
+/* FOOTER */
+.page-footer {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 2rem 2rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,247,242,0.2);
+}
+.footer-note {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85rem; font-style: italic; color: rgba(250,247,242,0.15);
+}
+
+.domain-node { cursor: pointer; }
+
+@media (max-width: 640px) {
+  .about-section { grid-template-columns: 1fr; gap: 2.5rem; }
+  .production-chain { grid-template-columns: 1fr; }
+  .tripolar-section { padding: 3rem 1.25rem; }
+  .topbar-inner, .page-header, .graph-section, .about-section, .page-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+}
+
+
+/* ── HIGH CONTRAST DARK — Option B ── */
+
+/* Body text: no more thin weight or low opacity */
+body { font-weight: 400; }
+
+/* All DM Mono kickers/labels: brighter and heavier */
+.eyebrow, .header-eyebrow, .context-eyebrow, .ecosystem-eyebrow,
+.section-label, .about-label, .graph-label, .tripolar-eyebrow,
+.chain-role, .chain-phase, .conn-label, .cta-label,
+.iok-loc, .jsb-attr-role, .byline, .header-byline,
+.nav-crumb, .nav-crumb span {
+  color: rgba(250,247,242,0.65) !important;
+  font-weight: 400 !important;
+}
+
+/* Body / paragraph text: lift to near-full opacity */
+.section p, .about-body p, .tripolar-narrative p,
+.context-body, .lede, .header-intro,
+.chain-desc, .conn-desc, .iok-body p,
+.context-name-item .desc, .domain-card .d-desc,
+.jsb-quote-text, .pull-quote p, .about-pullquote {
+  color: rgba(250,247,242,0.88) !important;
+  font-weight: 400 !important;
+}
+
+/* Small metadata: urls, nums, secondary labels */
+.domain-card .d-num, .domain-card .d-url,
+.d-url, .jsb-attr-role, .footer-brand, .footer-note,
+.chain-footnote, .ip-domain {
+  color: rgba(250,247,242,0.55) !important;
+  font-weight: 400 !important;
+}
+
+/* Nav links */
+.nav-links a, .subnav-link {
+  color: rgba(250,247,242,0.65) !important;
+  font-weight: 400 !important;
+}
+.subnav-link:hover, .nav-links a:hover { color: rgba(250,247,242,0.95) !important; }
+.subnav-link.active { color: rgba(250,247,242,1) !important; }
+
+/* Topbar brand kicker */
+.topbar-brand-kicker { color: rgba(250,247,242,0.55) !important; font-weight: 400 !important; }
+
+/* IP tag text in graph panel */
+.ip-tag { color: rgba(250,247,242,0.65) !important; }
+
+/* Rotating panel question text */
+.rotating-slide .d-desc { color: rgba(250,247,242,0.75) !important; font-style: italic; }
+.rotating-slide .d-url { color: rgba(250,247,242,0.5) !important; }
+
+/* DM Mono links */
+.rotating-link, .ext-link, .jsb-soundtrap,
+.iok-link, .linkedin-link, .download-cta {
+  color: rgba(250,247,242,0.65) !important;
+  font-weight: 400 !important;
+}
+
+/* Table cells */
+.pt-cell { color: rgba(250,247,242,0.82) !important; font-weight: 400 !important; }
+.pt-cell:nth-child(1) { color: rgba(250,247,242,0.6) !important; }
+
+/* Cite / attribution */
+.pull-quote cite, .tripolar-quote cite, .jsb-attr-source { color: rgba(250,247,242,0.55) !important; }
+
+/* Chain attrs pills */
+.chain-attrs span { color: rgba(250,247,242,0.72) !important; }
+
+/* Letter body */
+.letter-body { color: rgba(250,247,242,0.88) !important; font-weight: 400 !important; }
+.letter-body .l-addressee, .letter-body .l-sig-role { color: rgba(250,247,242,0.65) !important; }
+
+/* Context items */
+.context-name-item .role { font-weight: 400 !important; }
+
+/* Sub headings h3 */
+.section h3 { color: rgba(250,247,242,0.88) !important; font-weight: 400 !important; }
+
+/* Legend */
+.legend { color: rgba(250,247,242,0.6) !important; font-weight: 400 !important; }
+
+/* ── BODY TEXT SIZE FIX ── */
+.letter-body { font-size: 1rem !important; line-height: 1.88 !important; }
+.context-col p { font-size: 1rem !important; line-height: 1.85 !important; }
+.section p { font-size: 1rem !important; line-height: 1.88 !important; }
+.about-body p { font-size: 1rem !important; line-height: 1.88 !important; }
+.iok-body p { font-size: 1rem !important; line-height: 1.8 !important; }
+.conn-desc { font-size: 0.92rem !important; }
+.chain-desc { font-size: 0.95rem !important; }
+.tripolar-narrative p { font-size: 1rem !important; }
+body { font-size: 17px !important; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="../../index.html" class="topbar-brand" style="padding:0.6rem 1.25rem 0.4rem 0;">
+      <img src="logo.png" alt="Crooney.ca" style="height:36px;width:auto;display:block;">
+      <span class="topbar-brand-kicker" style="margin-top:2px;">Crooney Interactive</span>
+    </a>
+    <nav class="subnav">
+      <a href="./index.html" class="subnav-link active">Ecosystem</a>
+      <a href="../#songs" class="subnav-link">Songs</a>
+      <a href="../#sets" class="subnav-link">Sets</a>
+      <a href="../stays/" class="subnav-link">Stays</a>
+      <a href="https://tidemarktheatre.com" class="subnav-link" target="_blank">Events</a>
+      <a href="https://lab.crooney.ca" class="subnav-link" target="_blank">Lab</a>
+      <a href="https://phd.crooney.ca" class="subnav-link" target="_blank">PhD</a>
+    </nav>
+  </div>
+</nav>
+
+<header class="page-header">
+  <p class="eyebrow">Seven domains · One system</p>
+  <h1 class="page-title">The Ecosystem</h1>
+  <p class="page-sub">Seven viewpoints into the same autopoietic system — not seven separate sites.</p>
+</header>
+
+<section class="graph-section">
+  <p class="graph-label">Interactive topology · Click a node to inspect · Click a pill to highlight</p>
+
+  <div class="ctrl-bar">
+    <span class="ctrl-label">Pathway</span>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+      <button class="pill" data-type="pathway" data-val="audience">Audience</button>
+      <button class="pill" data-type="pathway" data-val="student">Student</button>
+      <button class="pill" data-type="pathway" data-val="researcher">Researcher</button>
+      <button class="pill" data-type="pathway" data-val="funder">Funder</button>
+      <button class="pill" data-type="pathway" data-val="collaborator">Collaborator</button>
+    </div>
+    <div class="ctrl-sep"></div>
+    <span class="ctrl-label">Phase</span>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+      <button class="pill" data-type="seed" data-val="study">Study</button>
+      <button class="pill" data-type="seed" data-val="explore">Explore</button>
+      <button class="pill" data-type="seed" data-val="evaluate">Evaluate</button>
+      <button class="pill" data-type="seed" data-val="design">Design</button>
+    </div>
+    <div class="ctrl-sep"></div>
+    <span class="ctrl-label">RPV</span>
+    <div style="display:flex;gap:3px;flex-wrap:wrap">
+      <button class="pill" data-type="rpv" data-val="resources">Resources</button>
+      <button class="pill" data-type="rpv" data-val="processes">Processes</button>
+      <button class="pill" data-type="rpv" data-val="values">Values</button>
+    </div>
+  </div>
+
+  <div id="graph-wrap">
+    <svg id="g" viewBox="0 0 680 520" role="img">
+      <title>Crooney ecosystem — seven domain topology</title>
+      <desc>Interactive graph of seven interconnected domains with switchable overlays for pathways, S/E/E/D phases, and RPV dimensions.</desc>
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <rect x="0" y="428" width="680" height="92" fill="#1a2d1a" opacity="0.5"/>
+      <text x="340" y="508" text-anchor="middle" font-size="10" fill="#3b6d11" letter-spacing="0.12em" font-family="'DM Mono',monospace" opacity="0.7">LOCATIONS · SUBSTRATE · CONDITIONS OF EMERGENCE</text>
+      <g id="edges-layer"></g>
+      <g id="nodes-layer"></g>
+    </svg>
+    <div class="info-panel" id="info-panel">
+      <div class="ip-domain" id="ip-domain"></div>
+      <div class="ip-title" id="ip-title"></div>
+      <div class="ip-tags" id="ip-tags"></div>
+    </div>
+  </div>
+  <div class="legend" id="legend-bar">
+    <span>Click a node to open its domain · Dashed rect = substrate · Double arrow = bidirectional · Click a pill to highlight</span>
+  </div>
+</section>
+
+<section class="tripolar-section">
+  <div class="tripolar-inner">
+
+    <div class="tripolar-header">
+      <p class="tripolar-eyebrow">Rei Inamoto · Hacker / Hipster / Hustler</p>
+      <h2 class="tripolar-title">The three-identity system</h2>
+      <p class="tripolar-sub">From the design lab to the live lounge — all in one.</p>
+    </div>
+
+    <div class="tripolar-narrative">
+      <p>George Crooney is a working lounge singer — standards, singalongs, and songs that move rooms. The repertoire runs from Sinatra to Soundgarden, from classic country to crowd favourites most performers wouldn't think to play.</p>
+      <div class="tripolar-quote">
+        <p>"In everything I do, the ideology that works for me is a simple rule. Serve the song. The song's ego is bigger than anyone else's. If you serve the song you can't lose."</p>
+        <cite>Chris Goss, Rock Sound (2001) — songwriter, producer, frontman of Masters of Reality</cite>
+      </div>
+      <p>The song is the dish, the performer is the kitchen, and the room is who you're cooking for. The character has a history. Dr. Goulet — named for an SNL riff on Canadian crooner Robert Goulet, filtered through a decade of hosting Rockaoke Live! feat. The Naturals — was recognized for an alchemical gift with setlists: the ability to read a room and sequence songs that consistently delivered, then deploy the well-chosen deep cut precisely when the moment could hold it. The audience called it Doctor Obscurity. The name was a compliment.</p>
+      <p>When the band dissolved, the mad scientist traded the laboratory for the lounge. The experimental impulse remained — in the setlist sequencing, the intertextual song choices, the production infrastructure. The venue changed. Smaller rooms. More intimate. The request app replaced the binder.</p>
+    </div>
+
+    <div class="production-chain">
+      <div class="chain-card chain-card--rd">
+        <div class="chain-role">R&amp;D</div>
+        <div class="chain-name">Doctor Obscurity</div>
+        <div class="chain-mode">Hacker</div>
+        <div class="chain-phase">Study → Explore</div>
+        <div class="chain-attrs">
+          <span>Viable</span>
+          <span>Resources</span>
+          <span>Potentiality</span>
+        </div>
+        <div class="chain-desc">The scientist in the lab — studying the objective space of who, what, and where. Uncovering and curating the raw pools of songs from which everything else is drawn.</div>
+      </div>
+      <div class="chain-card chain-card--prod">
+        <div class="chain-role">Prod</div>
+        <div class="chain-name">Professor Playlist</div>
+        <div class="chain-mode">Hipster</div>
+        <div class="chain-phase">Explore → Evaluate</div>
+        <div class="chain-attrs">
+          <span>Feasible</span>
+          <span>Processes</span>
+          <span>Capability</span>
+        </div>
+        <div class="chain-desc">The designer in the studio — taking songs from Doctor Obscurity's pools and arranging them into designed playlists, setlists, and tasting menus. The sequenced prix fixe before it plays.</div>
+      </div>
+      <div class="chain-card chain-card--live">
+        <div class="chain-role">Live</div>
+        <div class="chain-name">George Crooney</div>
+        <div class="chain-mode">Hustler</div>
+        <div class="chain-phase">Evaluate → Design → Re-invest</div>
+        <div class="chain-attrs">
+          <span>Desirable</span>
+          <span>Values</span>
+          <span>Actuality</span>
+        </div>
+        <div class="chain-desc">The performer in the room — evaluating what's working, adjusting the set in real time, closing the loop: what lands on the floor feeds the next cycle of crate digging.</div>
+      </div>
+    </div>
+
+    <div class="chain-footnote">
+      S/E/E/D (Flynn) · Hacker/Hipster/Hustler (Inamoto) · Viable/Feasible/Desirable (IDEO, Flynn, corrected) · RPV (Christensen et al.) · Potentiality/Capability/Actuality (Beer)
+    </div>
+
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-left">
+    <p class="about-label">About</p>
+    <h2 class="about-name">Joel Flynn</h2>
+    <p class="about-title">
+      PhD Candidate · Carleton TIM<br>
+      Practitioner-Researcher<br>
+      Crooney Interactive · 1730 Technology Consulting Inc.
+    </p>
+    <a class="linkedin-link" href="https://www.linkedin.com/in/joelflynn" target="_blank" rel="noopener">
+      LinkedIn profile
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="about-right">
+    <div class="about-pullquote">
+      "Cultural systems develop through expansive learning cycles that recursively generate new mediating structures. These structures maintain viability through autopoietic reproduction, but the specific forms that emerge cannot be fully predicted from the initial conditions because the developmental process is (computationally) irreducible."
+      <cite>Flynn (2026)</cite>
+    </div>
+
+    <div class="about-body">
+      <p>In January 2014, I was simultaneously developing a loyalty rewards architecture for the golf industry and hosting a live music afterparty at a local Orlando venue — two unrelated experiments at the same trade show. That moment of coincidence turned out to be the founding event of a practice still running in 2026.</p>
+
+      <p>John Seely Brown calls this kind of work <em>radical research</em> — radical in the original Greek sense of going to the root: follow the problem, bend your lenses, re-frame what emerges in ways that may seem pathological to the field. This career's apparent non-linearity — labourer, performer, CIO, instructor, concert band cameraman, location assistant, consultant — is not a liability. <strong>It is the circumference of a circle.</strong> Every role is a different approach to the same root problem, at one of three layers: the design of irreducible live encounters (Resources), the engineering of competitive variety in hospitality platforms (Processes), or the governance architecture that authorizes value to move between them (Values).</p>
+
+      <p>I am a practitioner-researcher and PhD candidate whose core academic contribution — Flynn (2026) — is a correction to the standard miscategorization of disruptive failure vectors (DFV) within Christensen's RPV framework. The proof-of-concept is Rockaoke Live! feat. The Naturals: a ten-year live-band karaoke enterprise I co-created across Metro Vancouver, which failed precisely where RPV theory predicts — and which I misread, along with everyone else, until the research framework made the mechanism legible.</p>
+
+      <p>I'm currently completing a PhD in Technology Innovation Management. Three papers in development surface original theoretical contributions — including the DFV correction, a variety engineering model for hospitality experience platforms, and a coordination of analytical frameworks chosen — in the William James sense — for their cash value to this problem.</p>
+
+      <p>The applied side of this research is taking shape through <strong>Crooney Interactive</strong> (crooney.ca) and <strong>Multimodal Media Lab</strong> — designing location-based experiences in Campbell River and Vancouver Island that aim to find the sweet spot between the four elements of hospitality experience design: Food, Drink, Sound, and Light.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <span class="footer-brand">Crooney Interactive · crooney.ca</span>
+  <span class="footer-note">The ecosystem is never fully complete. The river keeps moving.</span>
+</footer>
+
+<script>
+const NODES = [
+  { id:'crooney', label:'crooney.ca', sub:'Live performance', sub2:'Open Work', x:340, y:88, r:50,
+    accent:'#534AB7', fill:'rgba(14,13,11,0.82)', stroke:'#534AB7',
+    url:'https://crooney.ca',
+    seed:['study','explore','design'], rpv:['resources','processes','values'], pathway:['audience','collaborator'],
+    desc:'The river mouth. Live performance, audience participation, Open Work. Where the system meets the room.',
+    tags:['P·S·L','Open Work','Audience entry'] },
+  { id:'soundtrap', label:'soundtrap', sub:'Intertextual archive', sub2:'Collaborator entry', x:118, y:210, r:44,
+    accent:'#0F6E56', fill:'rgba(14,13,11,0.82)', stroke:'#0F6E56',
+    url:'soundtrap.html',
+    seed:['study','explore'], rpv:['resources','processes'], pathway:['audience','student','collaborator'],
+    desc:'Archive and studio. 59+ sessions, seven eras. Sinatra/Jones remote collaboration model.',
+    tags:['Sound register','Archive','Collaborator entry'] },
+  { id:'phd', label:'phd', sub:'Theory integration', sub2:'F|D|S|L| tacklebox', x:562, y:210, r:44,
+    accent:'#993C1D', fill:'rgba(14,13,11,0.82)', stroke:'#993C1D',
+    url:'https://phd.crooney.ca',
+    seed:['study','evaluate'], rpv:['resources','values'], pathway:['researcher','funder'],
+    desc:'The dissertation. RPV maps conditions. S/E/E/D maps practitioner movement. F|D|S|L| bends perception toward the room — always partial.',
+    tags:['RPV','F|D|S|L|','Flynn 2026','Researcher entry'] },
+  { id:'aries', label:'aries', sub:'Pedagogical layer', sub2:'PRV curriculum', x:562, y:368, r:44,
+    accent:'#185FA5', fill:'rgba(14,13,11,0.82)', stroke:'#185FA5',
+    url:'https://aries.crooney.ca',
+    seed:['explore','evaluate','design'], rpv:['processes','values'], pathway:['student','collaborator'],
+    desc:'The curriculum. PRV: Processes → Resources → Values. Nine-module certificate in innovation system orchestration.',
+    tags:['PRV','Microcredential','Student entry'] },
+  { id:'projects', label:'projects', sub:'Exchange value', sub2:'Evaluate phase', x:340, y:338, r:44,
+    accent:'#854F0B', fill:'rgba(14,13,11,0.82)', stroke:'#854F0B',
+    url:'https://projects.crooney.ca',
+    seed:['evaluate'], rpv:['values'], pathway:['funder','researcher','collaborator'],
+    desc:'The commitment threshold. Which possibilities are ready for resources? Cult → exhibition → exchange value.',
+    tags:['Exchange value','Funder entry','Benjamin/Flynn'] },
+  { id:'lab', label:'lab', sub:'Exploratory experiments', sub2:'Always open', x:340, y:218, r:40,
+    accent:'#888780', fill:'rgba(14,13,11,0.82)', stroke:'#888780',
+    url:'https://lab.crooney.ca',
+    seed:['study','explore','design'], rpv:['resources','processes'], pathway:['researcher','collaborator'],
+    desc:'The laboratory. Home of Doctor Obscurity. Autopoietic: outputs become inputs. Gravitational center of the ecosystem.',
+    tags:['Autopoietic','R&D hub','Doctor Obscurity'] },
+  { id:'locations', label:'locations', sub:'Field sites · Substrate', sub2:'Conditions of emergence', x:168, y:458, r:44,
+    accent:'#3B6D11', fill:'rgba(14,13,11,0.82)', stroke:'#3B6D11',
+    url:'vanisle.html',
+    seed:['study','explore'], rpv:['resources'], pathway:['funder','researcher','audience'],
+    desc:'The bedrock. Seven nodes: Vancouver, VanIsle, Vegas, Anza, Euro, UK, Japan. Field sites persist whether or not you are in frame.',
+    tags:['7 nodes','Substrate','Latent value'] }
+];
+
+const EDGES = [
+  { from:'crooney', to:'soundtrap', bi:false, pathway:['audience'], seed:['study'], rpv:['resources'] },
+  { from:'crooney', to:'lab', bi:false, pathway:['collaborator','researcher'], seed:['study','explore'], rpv:['resources','processes'] },
+  { from:'crooney', to:'phd', bi:false, pathway:['researcher'], seed:['study','evaluate'], rpv:['resources','values'] },
+  { from:'soundtrap', to:'lab', bi:false, pathway:['researcher','collaborator'], seed:['explore'], rpv:['resources','processes'] },
+  { from:'soundtrap', to:'projects', bi:false, pathway:['student','collaborator'], seed:['evaluate'], rpv:['values'] },
+  { from:'soundtrap', to:'crooney', bi:false, pathway:['collaborator'], seed:['design'], rpv:['processes'] },
+  { from:'phd', to:'lab', bi:false, pathway:['researcher'], seed:['explore'], rpv:['processes'] },
+  { from:'phd', to:'aries', bi:false, pathway:['student','collaborator'], seed:['design'], rpv:['processes','values'] },
+  { from:'phd', to:'projects', bi:false, pathway:['funder'], seed:['evaluate'], rpv:['values'] },
+  { from:'aries', to:'projects', bi:false, pathway:['student','funder'], seed:['evaluate'], rpv:['values'] },
+  { from:'lab', to:'projects', bi:false, pathway:['researcher','funder'], seed:['evaluate'], rpv:['values'] },
+  { from:'lab', to:'aries', bi:false, pathway:['student'], seed:['design'], rpv:['processes'] },
+  { from:'locations', to:'lab', bi:false, pathway:['researcher'], seed:['study'], rpv:['resources'] },
+  { from:'locations', to:'projects', bi:false, pathway:['funder'], seed:['evaluate'], rpv:['values'] },
+  { from:'locations', to:'crooney', bi:true, pathway:['audience','researcher'], seed:['study','design'], rpv:['resources','processes'] },
+  { from:'projects', to:'crooney', bi:false, pathway:['audience','collaborator'], seed:['design'], rpv:['values'] },
+];
+
+const PC = { audience:'#534AB7', student:'#185FA5', researcher:'#993C1D', funder:'#854F0B', collaborator:'#0F6E56' };
+const SC = { study:'#534AB7', explore:'#0F6E56', evaluate:'#854F0B', design:'#185FA5' };
+const RC = { resources:'#0F6E56', processes:'#185FA5', values:'#993C1D' };
+
+let activeFilter = null;
+
+function nodePos(id) { return NODES.find(n=>n.id===id); }
+
+function edgeMatch(e) {
+  if (!activeFilter) return false;
+  const {type,val} = activeFilter;
+  if (type==='pathway') return e.pathway.includes(val);
+  if (type==='seed') return e.seed.includes(val);
+  if (type==='rpv') return e.rpv.includes(val);
+  return false;
+}
+function nodeMatch(n) {
+  if (!activeFilter) return true;
+  const {type,val} = activeFilter;
+  if (type==='pathway') return n.pathway.includes(val);
+  if (type==='seed') return n.seed.includes(val);
+  if (type==='rpv') return n.rpv.includes(val);
+  return true;
+}
+function activeColor() {
+  if (!activeFilter) return '#b4b2a9';
+  const {type,val} = activeFilter;
+  if (type==='pathway') return PC[val];
+  if (type==='seed') return SC[val];
+  if (type==='rpv') return RC[val];
+  return '#b4b2a9';
+}
+function clamp(ax,ay,bx,by,r) {
+  const dx=bx-ax,dy=by-ay,d=Math.sqrt(dx*dx+dy*dy);
+  if(d===0) return {x:ax,y:ay};
+  return {x:ax+dx/d*(r+2), y:ay+dy/d*(r+2)};
+}
+function svgEl(tag,attrs) {
+  const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+  return el;
+}
+
+function render() {
+  const eL=document.getElementById('edges-layer');
+  const nL=document.getElementById('nodes-layer');
+  eL.innerHTML=''; nL.innerHTML='';
+  const col=activeColor();
+
+  EDGES.forEach(edge => {
+    const a=nodePos(edge.from), b=nodePos(edge.to);
+    const match=edgeMatch(edge);
+    const op=!activeFilter?0.2:match?0.9:0.04;
+    const sw=match?2.5:0.8;
+    const stroke=match?col:'rgba(250,247,242,0.2)';
+    const ar=(edge.from==='locations')?{x:a.x,y:a.y-28}:{x:a.x,y:a.y};
+    const br=(edge.to==='locations')?{x:b.x,y:b.y-28}:{x:b.x,y:b.y};
+    const aR=edge.from==='locations'?0:a.r;
+    const bR=edge.to==='locations'?0:b.r;
+    const s=clamp(ar.x,ar.y,br.x,br.y,aR);
+    const e=clamp(br.x,br.y,ar.x,ar.y,bR);
+    const mx=(s.x+e.x)/2+(br.y-ar.y)*0.1;
+    const my=(s.y+e.y)/2-(br.x-ar.x)*0.1;
+
+    if (edge.bi) {
+      const off=5;
+      const dx=e.x-s.x,dy=e.y-s.y,d=Math.sqrt(dx*dx+dy*dy);
+      const ox=-dy/d*off,oy=dx/d*off;
+      eL.appendChild(svgEl('path',{d:`M${s.x+ox} ${s.y+oy} Q${mx+ox} ${my+oy} ${e.x+ox} ${e.y+oy}`,fill:'none',stroke:match?col:'rgba(59,109,17,0.4)','stroke-width':sw,opacity:op,'marker-end':'url(#arr)'}));
+      eL.appendChild(svgEl('path',{d:`M${e.x-ox} ${e.y-oy} Q${mx-ox} ${my-oy} ${s.x-ox} ${s.y-oy}`,fill:'none',stroke:match?col:'rgba(59,109,17,0.4)','stroke-width':sw,opacity:op,'marker-end':'url(#arr)'}));
+    } else {
+      eL.appendChild(svgEl('path',{d:`M${s.x} ${s.y} Q${mx} ${my} ${e.x} ${e.y}`,fill:'none',stroke,'stroke-width':sw,opacity:op,'marker-end':'url(#arr)'}));
+    }
+  });
+
+  NODES.forEach(node => {
+    const match=nodeMatch(node);
+    const op=!activeFilter?1:match?1:0.15;
+    const sw=!activeFilter?1.5:match?2.5:0.5;
+    const isLoc=node.id==='locations';
+    const ringColor=match&&activeFilter?activeColor():node.accent;
+
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','domain-node');
+    g.setAttribute('opacity',op);
+    g.style.cursor='pointer';
+
+    // Click: open URL in new tab
+    g.addEventListener('click', e => {
+      if (node.url) window.open(node.url, '_blank');
+    });
+
+    if (isLoc) {
+      // Dark fill rect with accent dashed border
+      g.appendChild(svgEl('rect',{x:node.x-72,y:node.y-28,width:144,height:56,rx:8,fill:node.fill,stroke:ringColor,'stroke-width':sw,'stroke-dasharray':'5 3'}));
+    } else {
+      // Dark fill circle with accent ring
+      g.appendChild(svgEl('circle',{cx:node.x,cy:node.y,r:node.r,fill:node.fill,stroke:ringColor,'stroke-width':sw}));
+    }
+
+    // All text in cream for legibility
+    const mkT=(x,y,sz,wt,opacity,txt,color)=>{
+      const t=svgEl('text',{x,y,'text-anchor':'middle','dominant-baseline':'central',
+        'font-size':sz,'font-weight':wt,opacity,fill:color||'#faf7f2',
+        'font-family':"'DM Mono',monospace"});
+      t.textContent=txt; return t;
+    };
+
+    if (isLoc) {
+      g.appendChild(mkT(node.x,node.y-8,12,500,1,node.label,node.accent));
+      g.appendChild(mkT(node.x,node.y+7,9,400,0.6,node.sub));
+    } else {
+      // Label in accent color, subs in cream
+      g.appendChild(mkT(node.x,node.y-9,13,500,1,node.label,node.accent));
+      g.appendChild(mkT(node.x,node.y+7,9,400,0.75,node.sub));
+      g.appendChild(mkT(node.x,node.y+19,9,400,0.45,node.sub2));
+    }
+    nL.appendChild(g);
+  });
+  updateLegend();
+}
+
+function showInfo(node) {
+  document.getElementById('ip-domain').textContent=node.url||node.id+'.crooney.ca';
+  document.getElementById('ip-title').textContent=node.desc;
+  document.getElementById('ip-tags').innerHTML=node.tags.map(t=>`<span class="ip-tag">${t}</span>`).join('');
+  document.getElementById('info-panel').classList.add('visible');
+}
+
+function updateLegend() {
+  const bar=document.getElementById('legend-bar');
+  if (!activeFilter) {
+    bar.innerHTML='<span>Dashed rect = substrate layer (locations) · Double arrow = bidirectional edge · Click node to inspect</span>';
+    return;
+  }
+  const {type,val}=activeFilter;
+  const cm=type==='pathway'?PC:type==='seed'?SC:RC;
+  const active=NODES.filter(n=>nodeMatch(n));
+  const label=type==='pathway'?`${val} pathway`:type==='seed'?`${val} phase`:`${val} layer`;
+  bar.innerHTML=`<span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:3px;background:${cm[val]};flex-shrink:0"></span><span>${label}</span></span><span style="color:rgba(250,247,242,0.2)">·</span><span>${active.length} active domains</span>`;
+}
+
+document.querySelectorAll('.pill').forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    const {type,val}=pill.dataset;
+    const was=pill.classList.contains('active');
+    document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+    document.getElementById('info-panel').classList.remove('visible');
+    activeFilter=was?null:{type,val};
+    if (!was) pill.classList.add('active');
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
