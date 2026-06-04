@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casting Into the Unknown — lab.crooney.ca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --ink: #0e0d0b;
+  --gold: #c8a96a;
+  --teal: #4a7c6f;
+  --rule: rgba(250,247,242,0.08);
+  --max-w: 800px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* NAV */
+.nav {
+  padding: 1.75rem 3rem;
+  border-bottom: 0.5px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.35);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: rgba(250,247,242,0.7); }
+.nav-back svg { width: 12px; height: 12px; }
+.nav-crumb {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.2);
+}
+.nav-crumb span { color: rgba(250,247,242,0.4); }
+
+/* HEADER */
+.page-header {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 5rem 3rem 3rem;
+}
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1.5rem;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+.page-title em { font-style: italic; color: var(--gold); }
+.byline {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.3);
+  margin-bottom: 2.5rem;
+}
+.rule { width: 40px; height: 0.5px; background: var(--teal); opacity: 0.6; margin-bottom: 2rem; }
+.lede {
+  font-size: 1.15rem;
+  color: rgba(250,247,242,0.88);
+  line-height: 1.8;
+  max-width: 620px;
+}
+
+/* BODY */
+.page-body {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 3rem 5rem;
+}
+.section {
+  padding: 3.5rem 0;
+  border-top: 0.5px solid var(--rule);
+}
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.2);
+  margin-bottom: 1.5rem;
+}
+.section h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+.section h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgba(250,247,242,0.88);
+  margin: 2rem 0 0.75rem;
+  font-style: italic;
+}
+.section p {
+  font-size: 1rem;
+  color: rgba(250,247,242,0.82);
+  line-height: 1.88;
+  margin-bottom: 1rem;
+}
+.section p em { font-style: italic; color: rgba(250,247,242,0.85); }
+.section p strong { font-weight: 400; color: var(--cream); }
+
+/* PULL QUOTE */
+.pull-quote {
+  margin: 2.5rem 0;
+  padding: 1.5rem 2rem;
+  border-left: 1px solid rgba(250,247,242,0.12);
+}
+.pull-quote p {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: rgba(250,247,242,0.88);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+.pull-quote cite {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.6);
+  font-style: normal;
+}
+
+/* PARALLEL TABLE */
+.parallel-table {
+  margin: 2.5rem 0;
+  border: 0.5px solid rgba(250,247,242,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.pt-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background: rgba(250,247,242,0.04);
+  border-bottom: 0.5px solid rgba(250,247,242,0.08);
+}
+.pt-header span {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.3);
+  padding: 0.75rem 1rem;
+}
+.pt-header span:nth-child(2),
+.pt-header span:nth-child(3) {
+  border-left: 0.5px solid rgba(250,247,242,0.08);
+}
+.pt-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 0.5px solid rgba(250,247,242,0.05);
+}
+.pt-row:last-child { border-bottom: none; }
+.pt-row:nth-child(even) { background: rgba(250,247,242,0.02); }
+.pt-cell {
+  padding: 0.9rem 1rem;
+  font-size: 0.88rem;
+  color: rgba(250,247,242,0.45);
+  line-height: 1.55;
+}
+.pt-cell:nth-child(1) {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.7);
+  display: flex;
+  align-items: center;
+}
+.pt-cell:nth-child(2) {
+  border-left: 0.5px solid rgba(250,247,242,0.08);
+  color: rgba(250,247,242,0.78);
+}
+.pt-cell:nth-child(3) {
+  border-left: 0.5px solid rgba(250,247,242,0.08);
+  color: var(--gold);
+  opacity: 0.8;
+}
+
+/* IOK CARD */
+.iok-card {
+  margin: 2.5rem 0;
+  border: 0.5px solid rgba(250,247,242,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.iok-header {
+  padding: 1.25rem 1.75rem;
+  border-bottom: 0.5px solid rgba(250,247,242,0.07);
+  background: rgba(250,247,242,0.03);
+  display: flex; align-items: baseline;
+  justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.iok-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+}
+.iok-loc {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.iok-body { padding: 1.5rem 1.75rem; }
+.iok-body p {
+  font-size: 0.95rem;
+  color: rgba(250,247,242,0.78);
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+}
+.iok-body em { color: rgba(250,247,242,0.8); font-style: italic; }
+.iok-body p:last-child { margin-bottom: 0; }
+
+/* GLEISER LINKS */
+.gleiser-links {
+  display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.25rem;
+}
+.ext-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(250,247,242,0.6); text-decoration: none;
+  border-bottom: 0.5px solid rgba(250,247,242,0.12);
+  padding-bottom: 2px; width: fit-content;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ext-link svg { width: 10px; height: 10px; transition: transform 0.2s; }
+.ext-link:hover { color: var(--gold); border-bottom-color: var(--gold); }
+.ext-link:hover svg { transform: translateX(2px); }
+
+/* CONNECTIONS GRID */
+.connections {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(250,247,242,0.06);
+  margin: 2rem 0; border: 0.5px solid rgba(250,247,242,0.06);
+}
+.conn {
+  background: var(--ink); padding: 1.5rem;
+  text-decoration: none; transition: background 0.2s;
+}
+.conn:hover { background: rgba(250,247,242,0.03); }
+.conn-label {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(250,247,242,0.4); margin-bottom: 0.5rem;
+}
+.conn-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem; font-style: italic; color: var(--cream); margin-bottom: 0.4rem;
+}
+.conn-desc { font-size: 0.85rem; color: rgba(250,247,242,0.65); line-height: 1.6; }
+
+/* ARTICLE CTA */
+.article-cta {
+  margin: 2.5rem 0; padding: 1.75rem;
+  border: 0.5px solid rgba(250,247,242,0.1); border-radius: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; text-decoration: none; flex-wrap: wrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+.article-cta:hover { background: rgba(250,247,242,0.03); border-color: rgba(250,247,242,0.2); }
+.cta-label {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(250,247,242,0.55); margin-bottom: 0.4rem;
+}
+.cta-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem; font-style: italic; color: var(--cream); margin-bottom: 0.2rem;
+}
+.cta-meta {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.15em; color: rgba(250,247,242,0.5);
+}
+.cta-arrow { flex-shrink: 0; color: rgba(250,247,242,0.2); transition: color 0.2s, transform 0.2s; }
+.article-cta:hover .cta-arrow { color: var(--gold); transform: translateX(4px); }
+
+/* FOOTER */
+.page-footer {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 2.5rem 3rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,247,242,0.2);
+}
+.footer-note {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85rem; font-style: italic; color: rgba(250,247,242,0.15);
+}
+
+@media (max-width: 640px) {
+  .nav, .page-header, .page-body, .page-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .page-header { padding-top: 3rem; }
+  .connections { grid-template-columns: 1fr; }
+  .pt-header, .pt-row { grid-template-columns: 1fr; }
+  .pt-cell:nth-child(2), .pt-cell:nth-child(3) { border-left: none; border-top: 0.5px solid rgba(250,247,242,0.05); }
+  .pt-header span:nth-child(2), .pt-header span:nth-child(3) { border-left: none; }
+}
+
+
+/* ── HIGH CONTRAST DARK — Option B ── */
+
+/* Body text: no more thin weight or low opacity */
+body { font-weight: 400; }
+
+/* All DM Mono kickers/labels: brighter and heavier */
+.eyebrow, .header-eyebrow, .context-eyebrow, .ecosystem-eyebrow,
+.section-label, .about-label, .graph-label, .tripolar-eyebrow,
+.chain-role, .chain-phase, .conn-label, .cta-label,
+.iok-loc, .jsb-attr-role, .byline, .header-byline,
+.nav-crumb, .nav-crumb span {
+  color: rgba(250,247,242,0.65) !important;
+  font-weight: 400 !important;
+}
+
+/* Body / paragraph text: lift to near-full opacity */
+.section p, .about-body p, .tripolar-narrative p,
+.context-body, .lede, .header-intro,
+.chain-desc, .conn-desc, .iok-body p,
+.context-name-item .desc, .domain-card .d-desc,
+.jsb-quote-text, .pull-quote p, .about-pullquote {
+  color: rgba(250,247,242,0.88) !important;
+  font-weight: 400 !important;
+}
+
+/* Small metadata: urls, nums, secondary labels */
+.domain-card .d-num, .domain-card .d-url,
+.d-url, .jsb-attr-role, .footer-brand, .footer-note,
+.chain-footnote, .ip-domain {
+  color: rgba(250,247,242,0.55) !important;
+  font-weight: 400 !important;
+}
+
+/* Nav links */
+.nav-links a, .subnav-link {
+  color: rgba(250,247,242,0.65) !important;
+  font-weight: 400 !important;
+}
+.subnav-link:hover, .nav-links a:hover { color: rgba(250,247,242,0.95) !important; }
+.subnav-link.active { color: rgba(250,247,242,1) !important; }
+
+/* Topbar brand kicker */
+.topbar-brand-kicker { color: rgba(250,247,242,0.55) !important; font-weight: 400 !important; }
+
+/* IP tag text in graph panel */
+.ip-tag { color: rgba(250,247,242,0.65) !important; }
+
+/* Rotating panel question text */
+.rotating-slide .d-desc { color: rgba(250,247,242,0.75) !important; font-style: italic; }
+.rotating-slide .d-url { color: rgba(250,247,242,0.5) !important; }
+
+/* DM Mono links */
+.rotating-link, .ext-link, .jsb-soundtrap,
+.iok-link, .linkedin-link, .download-cta {
+  color: rgba(250,247,242,0.65) !important;
+  font-weight: 400 !important;
+}
+
+/* Table cells */
+.pt-cell { color: rgba(250,247,242,0.82) !important; font-weight: 400 !important; }
+.pt-cell:nth-child(1) { color: rgba(250,247,242,0.6) !important; }
+
+/* Cite / attribution */
+.pull-quote cite, .tripolar-quote cite, .jsb-attr-source { color: rgba(250,247,242,0.55) !important; }
+
+/* Chain attrs pills */
+.chain-attrs span { color: rgba(250,247,242,0.72) !important; }
+
+/* Letter body */
+.letter-body { color: rgba(250,247,242,0.88) !important; font-weight: 400 !important; }
+.letter-body .l-addressee, .letter-body .l-sig-role { color: rgba(250,247,242,0.65) !important; }
+
+/* Context items */
+.context-name-item .role { font-weight: 400 !important; }
+
+/* Sub headings h3 */
+.section h3 { color: rgba(250,247,242,0.88) !important; font-weight: 400 !important; }
+
+/* Legend */
+.legend { color: rgba(250,247,242,0.6) !important; font-weight: 400 !important; }
+
+/* ── BODY TEXT SIZE FIX ── */
+.letter-body { font-size: 1rem !important; line-height: 1.88 !important; }
+.context-col p { font-size: 1rem !important; line-height: 1.85 !important; }
+.section p { font-size: 1rem !important; line-height: 1.88 !important; }
+.about-body p { font-size: 1rem !important; line-height: 1.88 !important; }
+.iok-body p { font-size: 1rem !important; line-height: 1.8 !important; }
+.conn-desc { font-size: 0.92rem !important; }
+.chain-desc { font-size: 0.95rem !important; }
+.tripolar-narrative p { font-size: 1rem !important; }
+body { font-size: 17px !important; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-back" style="display:flex;flex-direction:column;align-items:flex-start;text-decoration:none;padding:0.6rem 1rem 0.4rem 0;border:none;">
+    <img src="logo.png" alt="Crooney.ca" style="height:28px;width:auto;display:block;">
+    <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(250,247,242,0.5);">Crooney Interactive</span>
+  </a>
+  <span class="nav-crumb">lab <span>·</span> casting · <a href="/" style="color:rgba(250,247,242,0.4);text-decoration:none;">home</a> · <a href="/app/ecosystem/" style="color:rgba(250,247,242,0.4);text-decoration:none;">ecosystem</a></span>
+</nav>
+
+<header class="page-header">
+  <p class="eyebrow">Field methodology · The laboratory</p>
+  <h1 class="page-title">Casting Into<br>the <em>Unknown</em></h1>
+  <p class="byline">Marcelo Gleiser &nbsp;·&nbsp; Chronicle Review &nbsp;·&nbsp; September 2, 2016 &nbsp;·&nbsp; annotated by Professor Playlist</p>
+  <div class="rule"></div>
+  <p class="lede">A physicist learns to fly-fish. A river becomes a structural parallel for how researchers operate under irreducible uncertainty. The line between the known and the unknown turns out to be the only honest place to stand — and the same argument holds whether the water is physical or cultural.</p>
+</header>
+
+<main class="page-body">
+
+  <section class="section">
+    <p class="section-label">The argument</p>
+    <h2>Fishing as research methodology</h2>
+    <p>Marcelo Gleiser — theoretical physicist, Templeton Prize laureate, professor of natural philosophy at Dartmouth — arrived at fly-fishing late. What he found was not relaxation but a structural parallel to science itself: the fisherman, like the scientist, casts into water that cannot be seen through. Every fish is an unexpected surprise. There is no certainty.</p>
+
+    <div class="pull-quote">
+      <p>"Fishermen, even the most masterly, never know if they will catch anything. In the same spirit, scientists never know if their ideas will bear fruit. In fishing and in science we flirt with the elusive, trying to stack the odds in our favor even if ultimately we have no control over what will transpire."</p>
+      <cite>Marcelo Gleiser, Casting Into the Unknown, Chronicle Review, 2016</cite>
+    </div>
+
+    <p>The argument Gleiser makes is not romantic. It is epistemological. The line is the instrument. The hook is the probe. The river is reality. And reality does not give up its fish on demand.</p>
+    <p>Embedded in Gleiser's article is a quote from John Muir that functions as the shared foundational principle: <em>"When we try to pick out anything by itself, we find it hitched to everything else in the universe."</em> This is the interdependence principle — and it is precisely what intertextuality names in cultural research. Gleiser deploys it to describe physical science; the same insight underlies the entire Travels in Intertextuality project.</p>
+
+    <h3>Instinct in the dark</h3>
+    <p>Gleiser's guide takes him fishing at night, headlamp on, rod in hand. The instruction: <em>"Without your eyesight to guide you, you must fish on instinct. It forces you to be one with the water, with the rod, with the trout; no distractions."</em> The practitioner gives up the dominant sense and relies on feel, pattern recognition, accumulated experience. Tacit expertise made necessary by darkness.</p>
+    <p>This is the live performance condition exactly — the room that cannot be read in advance, the setlist that does not survive first contact with the audience, the HeadsUp Play slot that depends entirely on accumulated feel for what a room needs in a given moment.</p>
+
+    <h3>Persistence under uncertainty</h3>
+    <p>Gleiser's concluding principle: <em>"You know how far you can go only if, when seemingly defeated, you make yourself cast again and again."</em> This is not optimism. It is methodological disposition. The seven seasons of Seven Inning Stretch. Two hundred Soundtrap sessions. The same problem approached from different angles for thirty years.</p>
+
+    <a class="article-cta" href="https://www.chronicle.com/article/casting-into-the-unknown/" target="_blank" rel="noopener">
+      <div>
+        <p class="cta-label">Read the original article</p>
+        <p class="cta-title">Casting Into the Unknown</p>
+        <p class="cta-meta">The Chronicle Review &nbsp;·&nbsp; Marcelo Gleiser &nbsp;·&nbsp; September 2, 2016</p>
+      </div>
+      <svg class="cta-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <section class="section">
+    <p class="section-label">The extension</p>
+    <h2>From physical to cultural science</h2>
+    <p>Gleiser uses the fishing frame to probe physical reality — the unknown of the natural world, astrobiology, the origin of life. The fish is a discovery about nature. Professor Playlist uses the same frame to probe cultural reality — the intertextual system, the Song Server, the live performance ecosystem. The fish is a song, a playlist, a recording, a performance, a room that gives something up.</p>
+    <p>The structural parallel holds because both involve the same conditions: irreducible uncertainty, tacit expertise developed over seasons of fieldwork, unexpected catches that could not have been planned for, and the constitutive role of persistence.</p>
+    <p>Both deployments are legitimate applications of the same tertiary artifact (Wartofsky, 1979). Gleiser's version — applied in a peer-reviewed scholarly context at Dartmouth — establishes that fishing-as-research-methodology has precedent in serious academic discourse. The extension to cultural science is principled, not borrowed.</p>
+
+    <div class="parallel-table">
+      <div class="pt-header">
+        <span>Element</span>
+        <span>Gleiser · Physics</span>
+        <span>Flynn · Cultural research</span>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">The water</div>
+        <div class="pt-cell">Physical reality, the natural world</div>
+        <div class="pt-cell">Cultural reality, the intertextual system</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">Line &amp; hook</div>
+        <div class="pt-cell">Scientific instruments, research tools</div>
+        <div class="pt-cell">Spotify playlists, Soundtrap sessions, Shazam queries</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">The fish</div>
+        <div class="pt-cell">A discovery about nature</div>
+        <div class="pt-cell">A song, playlist, recording, performance</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">The unknown</div>
+        <div class="pt-cell">Below the surface of physical reality</div>
+        <div class="pt-cell">Ambient, streaming, algorithmic cultural space</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">The cast</div>
+        <div class="pt-cell">A research hypothesis or experiment</div>
+        <div class="pt-cell">A playlist curation or live performance set</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">Unexpected catch</div>
+        <div class="pt-cell">Scientific surprise, paradigm shift</div>
+        <div class="pt-cell">The Cascade Effect, the unplanned encore</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">Instinct in dark</div>
+        <div class="pt-cell">Tacit expert knowledge without sight</div>
+        <div class="pt-cell">Live performance without a setlist</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">Persistence</div>
+        <div class="pt-cell">"Make yourself cast again and again"</div>
+        <div class="pt-cell">Seven seasons, 200+ Soundtrap sessions</div>
+      </div>
+      <div class="pt-row">
+        <div class="pt-cell">Seasonal work</div>
+        <div class="pt-cell">Haig-Brown's four seasonal books</div>
+        <div class="pt-cell">SGS games by season, playoff performances</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label">The geographic anchor</p>
+    <h2>Haig-Brown's river is the same river</h2>
+    <p>Roderick Haig-Brown (1908–1976) organized his practitioner knowledge of fly-fishing around four seasonal volumes — <em>Fisherman's Spring</em>, <em>Fisherman's Summer</em>, <em>Fisherman's Fall</em>, <em>Fisherman's Winter</em>. Not rigid taxonomy: loose seasonal frames for cross-contextual knowledge access. Patient observation. Emergence over design. The fishing log as research journal.</p>
+
+    <div style="margin:2rem 0;border-radius:8px;overflow:hidden;background:#000;">
+      <div style="padding:75% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1198235473?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Fisherman's Fall"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+      <div style="padding:0.6rem 1rem;border-top:0.5px solid rgba(250,247,242,0.08);display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(250,247,242,0.45);">Fisherman's Fall</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;color:rgba(250,247,242,0.3);">Robert Nichol · NFB · 1967</span>
+      </div>
+    </div>
+    <p>Haig-Brown lived and wrote in Campbell River, BC. Professor Playlist is based in Campbell River, BC. The fishing frame is not borrowed from a distant scholarly tradition — it is geographically native to the practitioner's home base. <em>The line is cast from the same water.</em></p>
+    <p>The 2003 "Fisherman's Eyes" paper — Joel Flynn's earliest documented connection between the fishing/experience design framing and academic work — predates awareness of Gleiser's article by thirteen years. The convergence between Flynn's frame and Gleiser's is itself an instance of fishing logic: two practitioners casting into the same cultural stream from different positions, catching similar conceptual fish independently. This is precisely what Eco describes when cult objects accumulate meaning beyond authorial intention.</p>
+
+    <div class="pull-quote">
+      <p>"The beautiful thing about fishing at night is that without your eyesight to guide you, you must fish on instinct."</p>
+      <cite>Gleiser, quoting his guide Luca in Tuscany — the same instinct Doctor Obscurity operates on in the live room</cite>
+    </div>
+
+    <h3>The camera as fishing rod</h3>
+    <p>On tour with The National, the fishing metaphor was not theoretical. It was the working language used in real time to describe concert filming practice — received by band members who are themselves sports fishermen as recognition, not metaphor.</p>
+    <p><strong>Casting</strong> — deliberate throw toward an anticipated moment. Known song, expected breakdown, positioned and thrown. <strong>Trolling</strong> — moving slowly through the performance, dragging the lens, letting the catch come. Patient. Trusting the current.</p>
+    <p>The camera serves the song (Chris Goss: "the song's ego is bigger than anyone else's") — the lens is the glove, the frame is the mitt, the performer throws what arrives. Sean O'Brien works closely with the same musicians. The fishing frame was already in the shared ecosystem before any pitch was made.</p>
+
+    <h3>Doctor Obscurity as the fisherman</h3>
+    <p>Doctor Obscurity operates in fishing logic rather than gardening logic. The Spotify playlists are lines cast into the cultural stream. The algorithmic recommendations are currents that carry the line. The songs that surface are the catch — emergent, not planted.</p>
+    <p>The Cascade Effect: one Shazam query at The Cascade Room bar in Vancouver (January 31, 2026) — a single acoustic fingerprint cast into ambient sound — seeded a 14-song playlist through algorithmic recommendation cascade. The name "The Cascading Effect of Algorithmic Identification" emerged from a Claude conversation before the venue name was disclosed. Theoretical description and material fact converged without planning. This is Gleiser's unexpected surprise.</p>
+    <p>November 2025: Spotify's AI-generated playlists became indistinguishable from Joel's own curation. <em>The garden has grown a mirror.</em> The algorithmic recommendation engine had learned the fisherman's patterns well enough to cast independently. Gleiser's "reality amplifier" become autonomous.</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">The identity system</p>
+    <h2>The reflective practitioner as writer</h2>
+    <p>Haig-Brown was not only a fisherman. He was a writer who reflected on the practice — phenomenologically, seasonally, from inside the experience rather than above it. The four seasonal books are not fishing manuals. They are accounts of what it means to be a practitioner in conditions of emergence: what the river teaches, what patience costs, what the unexpected catch reveals about the catcher. The writing is the reflection on the sport, not a description of it.</p>
+    <p>The autopoietic identity system maps this structure directly. <strong>Doctor Obscurity</strong> is the fisherman — the crate digger, the room-reader, the practitioner navigating conditions with accumulated tacit knowledge, casting into cultural streams whose depths cannot be seen. <strong>Professor Playlist</strong> is the equivalent of Haig-Brown the writer — the reflective practitioner who accounts for what was caught, how, under what conditions, and what it meant. <em>Travels in Intertextuality</em> is the seasonal book. The Soundtrap sessions are the fishing log. The archive is the record of what the river gave up across thirty years of fieldwork.</p>
+    <p><strong>George Crooney</strong> is the performer in the room — the character whose name carries its own intertextual weight without needing to be unpacked. The lineage runs through the pun and the geography simultaneously: Bing Crosby fished the Campbell River, sang in the crooner tradition, worked as a film actor, and headlined the kind of Las Vegas rooms that became the template for the Rat Pack era — the same rooms George Clooney's Ocean's Eleven eulogized decades later. The tradition runs forward too: Michael Bublé, another BC-raised crooner, carries the lineage into the present tense. The name holds all of it quietly.</p>
+
+    <div class="pull-quote">
+      <p>Doctor Obscurity does the fishing. Professor Playlist writes about what was caught — and what the catching reveals about the water, the season, the practitioner, and the song.</p>
+      <cite>Structural note · Autopoietic identity system · crooney.ca ecosystem</cite>
+    </div>
+
+    <h3>Reflections on catching songs and making lists</h3>
+    <p>The format Haig-Brown developed — the reflective practitioner writing about a recreational experience from inside it, seasonally, phenomenologically — is the template for a body of writing that does not yet fully exist in the ecosystem but is implied by everything in it.</p>
+    <p>Not academic papers. Not liner notes. Not blog posts. Field notes on what it is like to fish for songs: the conditions of a particular session, the cast that landed, the one that got away, the moment when the algorithm became indistinguishable from the fisherman's own pattern, the room that gave up something unexpected in the third set on a Tuesday in March.</p>
+    <p>This writing would live at the intersection of soundtrap.crooney.ca (the archive, the catch) and lab.crooney.ca (the reflection, the methodology). Professor Playlist as Haig-Brown: the practitioner who goes to the water and comes back with something to say about what happened there — not as a report, but as a reckoning.</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">The place · euro.crooney.ca</p>
+    <h2>The Island of Knowledge, Tuscany</h2>
+    <p>Gleiser's epistemological metaphor has a physical address. The Island of Knowledge — founded by Marcelo and Kari Gleiser — occupies the Oratorio di Barottoli, a 13th-century pilgrimage church in the hills above Monteroni d'Arbia, twenty minutes from Siena, one hour from Florence. The site sits on the Via Francigena, the ancient pilgrimage route from Canterbury to Rome. During the 20th century it was home to Fabrizio Clerici, Italian surrealist painter and collaborator of Salvador Dali.</p>
+    <p>The Think Tank brings together scientists, humanists, artists, and public intellectuals for five-day immersive discussions — attendance by invitation only. Upcoming sessions address awe and transcendence, the emergence of agency, and rational mysticism. For euro.crooney.ca, this is the European field site where the tacklebox meets the oldest questions. The fishing metaphor follows Gleiser from the Dartmouth rivers to the Tuscan hills — and the practitioner follows it there.</p>
+
+    <div class="iok-card">
+      <div class="iok-header">
+        <span class="iok-title">Island of Knowledge</span>
+        <span class="iok-loc">Oratorio di Barottoli · Monteroni d'Arbia · Tuscany</span>
+      </div>
+      <div class="iok-body">
+        <p>Founded by <strong>Marcelo Gleiser</strong> (Appleton Professor of Natural Philosophy, Dartmouth; 2019 Templeton Prize laureate — an honor he shares with the Dalai Lama, Mother Teresa, Archbishop Desmond Tutu, and Freeman Dyson) and <strong>Kari Gleiser</strong> (clinical psychologist, AEDP Institute). A retreat for human flourishing combining self-discovery, science, and different disciplines in an intimate and reserved context.</p>
+        <p>Offerings: <em>Think Tank</em> (invitation-only five-day immersive discussions with distinguished scientists, humanists, artists, and public intellectuals); <em>IOK In-Sight</em> (five-day personal expansion retreats guided by Gleiser); <em>Exclusive Courses</em> in science, philosophy, and religion; psychotherapy training with Kari Gleiser in AEDP.</p>
+        <p>The project returns to the birthplace of the Renaissance to rethink the human condition — at a 13th-century site where 39 miracles were sanctioned by the Archbishop of Siena in 1616 and Salvador Dali visited his friend Fabrizio Clerici in the 20th century.</p>
+        <div class="gleiser-links">
+          <a class="ext-link" href="https://www.theislandofknowledge.com" target="_blank" rel="noopener">
+            theislandofknowledge.com
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="ext-link" href="https://bigthink.com/people/marcelo-gleiser/" target="_blank" rel="noopener">
+            Gleiser at Big Think
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="ext-link" href="https://podcasts.apple.com/ca/podcast/why-is-this-happening-the-chris-hayes-podcast/id1382983397?i=1000636753450" target="_blank" rel="noopener">
+            Gleiser on Why Is This Happening · Chris Hayes
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a class="ext-link" href="https://www.ms.now/msnbc-podcast/msnbc/discussing-origins-universe-marcelo-gleiser-podcast-transcript-n1308084" target="_blank" rel="noopener">
+            Discussing the origins of the universe · MSNBC
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label">Ecosystem connections</p>
+    <h2>Where this lives in the system</h2>
+
+    <div class="connections">
+      <a class="conn" href="https://lab.crooney.ca">
+        <p class="conn-label">Origin node</p>
+        <p class="conn-name">lab.crooney.ca</p>
+        <p class="conn-desc">The laboratory. Always open. Where Doctor Obscurity casts — and doesn't always catch.</p>
+      </a>
+      <a class="conn" href="https://euro.crooney.ca">
+        <p class="conn-label">Field site</p>
+        <p class="conn-name">euro.crooney.ca</p>
+        <p class="conn-desc">The European node. Tuscany, the Island of Knowledge, the Via Francigena. Conditions of emergence at the birthplace of the Renaissance.</p>
+      </a>
+      <a class="conn" href="https://phd.crooney.ca">
+        <p class="conn-label">The tacklebox</p>
+        <p class="conn-name">phd.crooney.ca</p>
+        <p class="conn-desc">F|D|S|L| — interpretive instruments. Lenses that bend perception toward the room, knowing the attempt is always partial.</p>
+      </a>
+      <a class="conn" href="https://soundtrap.crooney.ca">
+        <p class="conn-label">The archive</p>
+        <p class="conn-name">soundtrap.crooney.ca</p>
+        <p class="conn-desc">Travels in Intertextuality '24 — where Professor Playlist curates the catch. The recorded record of what the river gave up.</p>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <span class="footer-brand">lab.crooney.ca &nbsp;·&nbsp; casting</span>
+  <span class="footer-note">The fish don't repeat. The river keeps moving.</span>
+</footer>
+
+</body>
+</html>
