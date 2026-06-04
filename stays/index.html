@@ -57,7 +57,7 @@ a { color: inherit; }
   letter-spacing: 0.28em; text-transform: uppercase;
   color: rgba(250,247,242,0.55); margin-top: 2px;
 }
-.subnav { display: flex; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.subnav { display: flex; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 .subnav::-webkit-scrollbar { display: none; }
 .subnav-link {
   font-family: 'DM Mono', monospace; font-size: 9px;
@@ -313,14 +313,27 @@ a { color: inherit; }
   .topbar-inner, .page-body, .page-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
   .hero { padding: 4rem 1.25rem 3.5rem; }
 }
+/* KEEPER LINE */
+.keeper-section {
+  padding: 3rem 0 0;
+  border-top: 0.5px solid var(--rule);
+}
+.keeper-line {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(14,13,11,0.45);
+  line-height: 1.2;
+  max-width: 680px;
+}
 </style>
 </head>
 <body>
 
 <nav class="topbar">
   <div class="topbar-inner">
-    <a href="../index.html" class="topbar-brand">
-      <img src="../logo.png" alt="Crooney.ca">
+    <a href="https://crooney.ca" class="topbar-brand">
+      <img src="https://crooney.ca/logo.png" alt="Crooney.ca">
       <span class="topbar-brand-kicker">Crooney Interactive</span>
     </a>
     <nav class="subnav">
@@ -328,7 +341,7 @@ a { color: inherit; }
       <a href="/app/#songs" class="subnav-link">Songs</a>
       <a href="/app/#sets" class="subnav-link">Sets</a>
       <a href="/stays/" class="subnav-link active">Stays</a>
-      <a href="https://tidemarktheatre.com" class="subnav-link" target="_blank">Events</a>
+      <a href="/events/" class="subnav-link">Events</a>
       <a href="https://lab.crooney.ca" class="subnav-link" target="_blank">Lab</a>
       <a href="https://phd.crooney.ca" class="subnav-link" target="_blank">PhD</a>
     </nav>
@@ -461,6 +474,10 @@ a { color: inherit; }
         <p class="rev-note">Revenue: Crooney Interactive commission</p>
       </div>
     </div>
+  </section>
+
+  <section class="keeper-section">
+    <p class="keeper-line">Most guests come for the show. A keeper stays for the river.</p>
   </section>
 
   <section class="cta-section">
